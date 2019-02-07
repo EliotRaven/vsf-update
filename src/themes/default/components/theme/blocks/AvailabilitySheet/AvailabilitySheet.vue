@@ -3,11 +3,7 @@
     <div v-for="item in cItems" :key="item.source_code" class="item">
       <h4>{{ filterData(item).name }} : </h4>
       <button class="no-outline button-full block w-100 brdr-none px10 py10 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium">
-        {{
-        (item.qty_to_deduct > item.qty_available) ?
-        'забрать через три дня' :
-        'забрать здесь'
-        }}
+        {{ (item.qty_to_deduct > item.qty_available) ? 'Забрать через три дня' : 'Забрать здесь' }}
       </button>
 
     </div>
@@ -15,11 +11,11 @@
 </template>
 
 <script>
-import MagentaData from '../../../../../../../src/modules/magenta-data/components/MagentaData'
+import AvailabilitySheet from '../../../../../../../src/modules/availability-sheet/components/AvailabilitySheet'
 
 export default {
-  name: 'MagentaData',
-  mixins: [MagentaData],
+  name: 'AvailabilitySheet',
+  mixins: [AvailabilitySheet],
 }
 </script>
 

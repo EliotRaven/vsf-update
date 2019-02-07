@@ -351,6 +351,9 @@
           }
         ]
       }
+    },
+    "availabilitySheet": {
+      "token": "Bearer 7y4k94746yla7gbgbdo5ol8j3q1i5tj7",
+      "endpoint": "http://35.204.112.182/rest/V1/inventory/source-selection-algorithm-result"
     }
-
 }

@@ -18,6 +18,7 @@ import { AmpRenderer } from './amp-renderer';
 import { PaymentBackendMethods } from './payment-backend-methods';
 import { RawOutputExample } from './raw-output-example'
 import { Magento2CMS } from './magento-2-cms'
+import { AvailabilitySheet } from '../modules/availability-sheet'
 
 // Some modules  that still needs API refactoring are  temporary registered in core
 // This is how you can adjust any module with application-specific behavior
@@ -48,6 +49,7 @@ export const registerModules: VueStorefrontModule[] = [
   GoogleAnalytics,
   PaymentBackendMethods,
   RawOutputExample,
-  AmpRenderer
+  AmpRenderer,
+    AvailabilitySheet
   // Example
 ]

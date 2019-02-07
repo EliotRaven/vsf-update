@@ -1,5 +1,5 @@
 export default {
-  name: 'MagentaData',
+  name: 'AvailabilitySheet',
   props: {
     id: {
       default: null
@@ -7,7 +7,7 @@ export default {
 },
   computed: {
     info () {
-      return JSON.parse(JSON.stringify(this.$store.getters['magenta-data/info']));
+      return JSON.parse(JSON.stringify(this.$store.getters['availability-sheet/info']));
     },
     productsInCart () {
       return JSON.parse(JSON.stringify(this.$store.state.cart.cartItems));
@@ -29,7 +29,7 @@ export default {
         },
         algorithmCode: "priority"
       }
-      this.$store.dispatch('magenta-data/get', data);
+      this.$store.dispatch('availability-sheet/get', data);
     }
   },
   beforeMount () {
