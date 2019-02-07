@@ -1,0 +1,1 @@
+export const SET_MAGENTA_DATA = 'SET_MAGENTA_DATA'
