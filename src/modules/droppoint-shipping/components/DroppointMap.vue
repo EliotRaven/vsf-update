@@ -162,33 +162,35 @@ export default {
       this.center = droppoints[0].position
     },
     getDroppoints () {
-      // change method on mock data
-      dps.forEach(dp => {
-        if (!this.cities.includes(dp.city)) {
-          this.cities.push(dp.city)
+      this.droppoints = []
+      if (this.searchZipcode) {
+        this.loading = true
+        this.error = null
+        if (this.$config.droppointShipping) {
+          let endpoint = this.$config.droppointShipping[this.shippingMethod].endpoint
+
+          this.$store.dispatch('droppoint-shipping/fetch', {
+            url: endpoint + '/zipcode/' + encodeURIComponent(this.searchZipcode),
+            payload: {
+              method: 'GET',
+              headers: {'Content-Type': 'application/json'},
+              mode: 'cors'
+            },
+            callback_event: 'droppoint-map-update'
+          }, {root: true})
         }
-      })
-      this.city = this.cities[0]
-      this.setDroppoints(dps.filter(dp => dp.city === this.city))
-      // this.droppoints = []
-      // if (this.searchZipcode) {debugger
-      //   this.loading = true
-      //   this.error = null
-      //   if (this.$config.droppointShipping) {debugger
-      //     let endpoint = this.$config.droppointShipping[this.shippingMethod].endpoint
-      //
-      //     this.$store.dispatch('droppoint-shipping/fetch', {
-      //       url: endpoint + '/zipcode/' + encodeURIComponent(this.searchZipcode),
-      //       payload: {
-      //         method: 'GET',
-      //         headers: {'Content-Type': 'application/json'},
-      //         mode: 'cors'
-      //       },
-      //       callback_event: 'droppoint-map-update'
-      //     }, {root: true})
-      //   }
-      // }
+      }
     }
+  },
+  created () {
+    // change method on mock data
+    dps.forEach(dp => {
+      if (!this.cities.includes(dp.city)) {
+        this.cities.push(dp.city)
+      }
+    })
+    this.city = this.cities[0]
+    this.setDroppoints(dps.filter(dp => dp.city === this.city))
   },
   mounted () {
     if (this.shipping) {
