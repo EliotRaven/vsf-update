@@ -106,7 +106,7 @@ export default {
       city: null,
       cities: [],
       selected: false,
-      shipping: this.$store.state.checkout.shippingDetails,
+      shipping: this.$store.state.checkout.shippingDetails
     }
   },
   computed: {
@@ -117,7 +117,7 @@ export default {
           label: item
         }
       })
-    },
+    }
   },
   methods: {
     changeCity (city = this.city) {
