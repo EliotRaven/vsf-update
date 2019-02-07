@@ -15,12 +15,11 @@ import AvailabilitySheet from '../../../../../../../src/modules/availability-she
 
 export default {
   name: 'AvailabilitySheet',
-  mixins: [AvailabilitySheet],
+  mixins: [AvailabilitySheet]
 }
 </script>
 
 <style lang="scss" scoped>
-    @import "~theme/css/animations/transitions";
     .availability-sheet {
       padding: 15px;
       border: 1px solid #ebebeb;
