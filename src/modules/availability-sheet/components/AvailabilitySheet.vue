@@ -1,38 +1,74 @@
+<script>
+import moment from 'moment'
+import Product from '../../../themes/default/components/core/blocks/Checkout/Product'
+import { mapGetters } from 'vuex'
+
 export default {
+  components: {Product},
   name: 'AvailabilitySheet',
   props: {
     id: {
+      type: String,
+      default: null
+    },
+    stockId: {
+      type: Number,
+      default: null
+    },
+    item: {
+      type: Object,
       default: null
     }
   },
+  data () {
+    return {
+      selected: '',
+      showPopup: false
+    }
+  },
   computed: {
+    ...mapGetters({
+      totals: 'cart/totals'
+    }),
+    cDate () {
+      return moment(new Date()).add(3, 'days').format('MM.DD')
+    },
     info () {
-      return JSON.parse(JSON.stringify(this.$store.getters['availability-sheet/info']));
+      return JSON.parse(JSON.stringify(this.$store.getters['availability-sheet/info'])).filter(i => i.source_code === this.id)
     },
     productsInCart () {
-      return JSON.parse(JSON.stringify(this.$store.state.cart.cartItems));
+      return JSON.parse(JSON.stringify(this.$store.state.cart.cartItems))
     },
-    cItems () {
-      return this.info.filter(i => i.source_code === this.id);
+    notAll () {
+      return this.info.find(i => i.qty_to_deduct > i.qty_available)
     }
   },
   methods: {
     filterData (item) {
-      return this.productsInCart.find(i => i.sku === item.sku);
+      return this.productsInCart.find(i => i.sku === item.sku)
     },
 
     getData () {
       let data = {
         inventoryRequest: {
-          stockId: this.id,
+          stockId: this.stockId,
           items: this.productsInCart
         },
         algorithmCode: 'priority'
-      };
-      this.$store.dispatch('availability-sheet/get', data);
+      }
+      this.$store.dispatch('availability-sheet/get', data)
+    }
+  },
+  watch: {
+    selected (val) {
+      this.$emit('get:selected', val)
+    },
+    showPopup (val) {
+      this.$emit('show:popup', val)
     }
   },
   beforeMount () {
-    this.getData();
+    this.getData()
   }
 }
+</script>

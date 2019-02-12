@@ -10,7 +10,8 @@ export const dps = [
     'city': 'Zaporizhzhia',
     'zipcode': '69000',
     'streetname': 'Soborniy',
-    'streetname2': '98'
+    'streetname2': '98',
+    'city_id': 1
   },
   {
     'position': {
@@ -23,7 +24,8 @@ export const dps = [
     'city': 'Zaporizhzhia',
     'zipcode': '69000',
     'streetname': 'Soborniy',
-    'streetname2': '126'
+    'streetname2': '126',
+    'city_id': 1
   },
   {
     'position': {
@@ -36,6 +38,7 @@ export const dps = [
     'city': 'Kyiv',
     'zipcode': '02000',
     'streetname': 'Pushkinska',
-    'streetname2': '2'
+    'streetname2': '2',
+    'city_id': 2
   }
 ]

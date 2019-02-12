@@ -9,7 +9,8 @@ module.exports = {
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: [
-    'plugin:vue/recommended', 'standard'
+    'standard',
+    'plugin:vue/recommended',
   ],
   plugins: [
     'vue',
@@ -38,4 +39,4 @@ module.exports = {
     'vue-storefront/no-corepage-import': 'error',
     'vue-storefront/no-corepage': 'error'
   }
-}
+};
