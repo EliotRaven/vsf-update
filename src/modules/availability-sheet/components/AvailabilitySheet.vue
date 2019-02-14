@@ -39,6 +39,14 @@ export default {
     productsInCart () {
       return JSON.parse(JSON.stringify(this.$store.state.cart.cartItems))
     },
+    productsInCartMap () {
+      return this.productsInCart.map(i => {
+        return {
+          sku: i.sku,
+          qty: i.qty
+        }
+      })
+    },
     notAll () {
       return this.info.find(i => i.qty_to_deduct > i.qty_available)
     }
@@ -52,7 +60,7 @@ export default {
       let data = {
         inventoryRequest: {
           stockId: this.stockId,
-          items: this.productsInCart
+          items: this.productsInCartMap
         },
         algorithmCode: 'priority'
       }
