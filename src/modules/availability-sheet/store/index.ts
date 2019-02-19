@@ -1,6 +1,8 @@
 import * as types from './mutation-types'
 import config from 'config'
 import axios from "axios";
+import rootStore from '@vue-storefront/store'
+import { TaskQueue } from '@vue-storefront/core/lib/sync'
 
 let initialData = {
     "source_selection_items": [
@@ -56,21 +58,37 @@ export const module = {
     },
     actions: {
         get ({ commit }, data) {
-            const { token, endpoint } = config.availabilitySheet;
+            debugger
+            // const { token, endpoint } = config.availabilitySheet;
 
-            axios({
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token,
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-                },
-                url: endpoint,
-                data
-            }).then(res => {
-                commit(types.SET_AVAILABILITY_SHEET, res.data)
-            });
+            // axios({
+            //     method: 'post',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': token,
+            //     },
+            //     url: endpoint,
+            //     data
+            // }).then(res => {
+            //     commit(types.SET_AVAILABILITY_SHEET, res.data)
+            // });
+            // if (rootStore.state.config.cart.synchronize_totals && (typeof navigator !== 'undefined' ? navigator.onLine : true)) {
+                TaskQueue.execute({ url: rootStore.state.config.cart.shippingmethods_endpoint,
+                    payload: {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        mode: 'cors',
+                        body: JSON.stringify(data)
+                    },
+                    silent: true
+                }).then((task: any) => {
+                    debugger
+                    commit(types.SET_AVAILABILITY_SHEET, task)
+                }).catch(e => {
+                    debugger
+                    console.error(e)
+                })
+            // }
             // commit(types.SET_AVAILABILITY_SHEET, initialData.source_selection_items)
 
         }
