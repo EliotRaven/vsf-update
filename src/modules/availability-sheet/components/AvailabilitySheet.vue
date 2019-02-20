@@ -34,10 +34,10 @@ export default {
       return moment(new Date()).add(3, 'days').format('MM.DD')
     },
     info () {
-      return this.$store.getters['availability-sheet/info'].filter(i => i.source_code === this.id)
+      return JSON.parse(JSON.stringify(this.$store.getters['availability-sheet/info'])).filter(i => i.source_code === this.id)
     },
     productsInCart () {
-      return this.$store.state.cart.cartItems
+      return JSON.parse(JSON.stringify(this.$store.state.cart.cartItems))
     },
     productsInCartMap () {
       return this.productsInCart.map(i => {

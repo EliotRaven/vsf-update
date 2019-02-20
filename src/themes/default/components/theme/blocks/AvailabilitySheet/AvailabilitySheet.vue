@@ -40,7 +40,9 @@
             </div>
             <div v-if="!notAll" class="all">Забрать здесь</div>
             <div v-if="notAll" class="not-all">
-              Отсутствует: <a href="#" @click.prevent="showPopup = !showPopup">{{ filterData(notAll).name }}</a>
+              Отсутствует: <a href="#" @click.prevent="showPopup = !showPopup">
+                {{ filterData(notAll) && filterData(notAll).name }}
+              </a>
             </div>
           </div>
         </div>
