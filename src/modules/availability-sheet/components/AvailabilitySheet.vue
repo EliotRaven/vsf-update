@@ -47,11 +47,16 @@ export default {
         }
       })
     },
-    notAll () {
-      return this.info.find(i => i.qty_to_deduct > i.qty_available)
-    }
   },
   methods: {
+    notAll () {
+      let data = []
+
+      this.info.filter(e => {
+        data.push(this.productsInCart.filter(i => e.sku !== i.sku))
+      })
+      return data
+    },
     filterData (item) {
       return this.productsInCart.find(i => i.sku === item.sku)
     },
