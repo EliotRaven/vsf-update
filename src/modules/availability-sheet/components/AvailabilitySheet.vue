@@ -33,8 +33,8 @@ export default {
     cDate () {
       return moment(new Date()).add(3, 'days').format('MM.DD')
     },
-    info () {
-      return JSON.parse(JSON.stringify(this.$store.getters['availability-sheet/info'])).filter(i => i.source_code === this.id)
+    availability () {
+      return JSON.parse(JSON.stringify(this.$store.getters['availability-sheet/availability'])).filter(i => i.source_code === this.id)
     },
     productsInCart () {
       return JSON.parse(JSON.stringify(this.$store.state.cart.cartItems))
@@ -47,20 +47,24 @@ export default {
         }
       })
     },
+    notAll () {
+      return this.availability.find(e => e.qty_to_deduct > e.qty_available)
+    }
   },
   methods: {
-    notAll () {
-      let data = []
-
-      this.info.filter(e => {
-        data.push(this.productsInCart.filter(i => e.sku !== i.sku))
+    findMissing () {
+      return this.productsInCart.map(e => {
+        let curCity = this.availability.filter(i => i.source_code === this.item.id)
+        debugger
+        let missing = curCity.find(c => e.sku !== c.sku)
+        debugger
+        let notAvailable = curCity.filter(c => c.qty_available < parseInt(e.qty))
+        return [...missing, ...notAvailable]
       })
-      return data
     },
     filterData (item) {
       return this.productsInCart.find(i => i.sku === item.sku)
     },
-
     getData () {
       let data = {
         inventoryRequest: {

@@ -2,11 +2,13 @@
   <div class="availability-sheet">
     <div class="radioStyled">
       <div class="flex w-100">
-        <pre>{{ notAll }}</pre>
         <div class="info"><i>i</i></div>
         <div class="content">
           <p class="title">{{ item.city }}, {{ item.streetname }}, {{ item.streetname2 }}</p>
           <div class="subtitle">
+            <pre>{{ item.id }}</pre>
+            <pre>{{ findMissing() }}</pre>
+            <pre v-for="miss in findMissing()" :key="miss.id">{{ miss.sku }} : {{ miss.qty }}</pre>
             <div class="popup" v-if="showPopup">
               <div class="popup-container">
                 <product v-for="product in productsInCart" :key="product.sku" :product="product"/>
@@ -39,12 +41,12 @@
                 </div>
               </div>
             </div>
-            <!--<div v-if="!notAll" class="all">Забрать здесь</div>-->
-            <!--<div v-if="notAll" class="not-all">-->
-            <!--Отсутствует: <a href="#" @click.prevent="showPopup = !showPopup">-->
-            <!--{{ filterData(notAll) && filterData(notAll).name }}-->
-            <!--</a>-->
-            <!--</div>-->
+            <div v-if="!notAll" class="all">Забрать здесь</div>
+            <div v-if="notAll" class="not-all">
+              Отсутствует: <a href="#" @click.prevent="showPopup = !showPopup">
+                {{ filterData(notAll) && filterData(notAll).name }}
+              </a>
+            </div>
           </div>
         </div>
         <label class="button-wrapper">

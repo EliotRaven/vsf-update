@@ -7,7 +7,7 @@ let initialData = {
         {
             source_code: "51cd3ca2-8b66-11e8-80c4-eec2ef9f58ac",
             sku: "MP01-32-Black",
-            qty_to_deduct: 1,
+            qty_to_deduct: 2,
             qty_available: 1
         },
         {
@@ -19,19 +19,19 @@ let initialData = {
         {
             source_code: "51cd3ca2-8b66-11e8-80c4-eec2ef9f58ad",
             sku: "MP01-32-Black",
-            qty_to_deduct: 1,
+            qty_to_deduct: 2,
             qty_available: 5
         },
         {
             source_code: "51cd3ca2-8b66-11e8-80c4-eec2ef9f58ae",
             sku: "MP01-32-Black",
-            qty_to_deduct: 1,
+            qty_to_deduct: 2,
             qty_available: 8
         },
         {
             source_code: "51cd3ca2-8b66-11e8-80c4-eec2ef9f58ae",
             sku: "MSH10-32-Blue",
-            qty_to_deduct: 1,
+            qty_to_deduct: 5,
             qty_available: 7
         }
     ],
@@ -41,11 +41,11 @@ let initialData = {
 export const module = {
     namespaced: true,
     state: {
-        info: []
+        availability: []
     },
     mutations: {
         [types.SET_AVAILABILITY_SHEET] (state, payload) {
-            state.info = payload
+            state.availability = payload
         }
     },
     actions: {
@@ -72,6 +72,6 @@ export const module = {
         }
     },
     getters: {
-        info: state => state.info
+        availability: state => state.availability
     }
 }
