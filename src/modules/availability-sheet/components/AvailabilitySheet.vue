@@ -53,14 +53,15 @@ export default {
   },
   methods: {
     findMissing () {
-      return this.productsInCart.map(e => {
-        let curCity = this.availability.filter(i => i.source_code === this.item.id)
-        debugger
-        let missing = curCity.find(c => e.sku !== c.sku)
-        debugger
-        let notAvailable = curCity.filter(c => c.qty_available < parseInt(e.qty))
-        return [...missing, ...notAvailable]
+      let skuArr = this.availability.filter(i => i.sku && i.source_code === this.item.id).map(i => i.sku)
+      let currentStock = this.availability.filter(i => i.sku && i.source_code === this.item.id)
+      let outOfStock = this.productsInCart.filter(i => !skuArr.includes(i.sku))
+      let low = this.productsInCart.filter(i => {
+        if (currentStock.find(p => p.sku === i.sku)) {
+          return currentStock.find(p => p.sku === i.sku)['qty_available'] < i.qty
+        }
       })
+      return [...outOfStock, ...low]
     },
     filterData (item) {
       return this.productsInCart.find(i => i.sku === item.sku)

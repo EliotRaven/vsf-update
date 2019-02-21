@@ -6,9 +6,6 @@
         <div class="content">
           <p class="title">{{ item.city }}, {{ item.streetname }}, {{ item.streetname2 }}</p>
           <div class="subtitle">
-            <pre>{{ item.id }}</pre>
-            <pre>{{ findMissing() }}</pre>
-            <pre v-for="miss in findMissing()" :key="miss.id">{{ miss.sku }} : {{ miss.qty }}</pre>
             <div class="popup" v-if="showPopup">
               <div class="popup-container">
                 <product v-for="product in productsInCart" :key="product.sku" :product="product"/>
@@ -41,17 +38,17 @@
                 </div>
               </div>
             </div>
-            <div v-if="!notAll" class="all">Забрать здесь</div>
-            <div v-if="notAll" class="not-all">
+            <div v-if="!findMissing().length" class="all">Забрать здесь</div>
+            <div v-if="findMissing().length" class="not-all">
               Отсутствует: <a href="#" @click.prevent="showPopup = !showPopup">
-                {{ filterData(notAll) && filterData(notAll).name }}
+                {{ findMissing().length && findMissing()[0].name }}
               </a>
             </div>
           </div>
         </div>
         <label class="button-wrapper">
-          <a href="#" :class="[{'btn-outline btn-danger btn': !notAll}]">
-            {{ !notAll ? 'Забрать здесь' : `Заказать на ${cDate}` }}
+          <a href="#" :class="[{'btn-outline btn-danger btn': !findMissing().length}]">
+            {{ !findMissing().length ? 'Забрать здесь' : `Заказать на ${cDate}` }}
             <input type="radio" v-model="selected" :value="item.id" >
           </a>
         </label>
