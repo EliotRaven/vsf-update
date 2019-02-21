@@ -1,27 +1,27 @@
 <template>
-  <div class="row p25 between-xs">
+  <div class="row py25 between-xs product">
     <img class="blend" v-lazy="thumbnail">
     <div class="col-xs">
       <div class="row">
         <div class="col-xs-12 col-md-9 pb15">
           <div class="mb15">
-            <div class="h4 weight-400 cl-accent serif">{{ product.name | htmlDecode }}</div>
+            <div class="h4">{{ product.name | htmlDecode }}</div>
             <div class="error" v-if="product.errors && Object.keys(product.errors).length > 0">
               {{ product.errors | formatProductMessages }}
             </div>
             <div class="h5 cl-tertiary pt5">{{ product.sku }}</div>
-            <div class="h6 cl-bg-tertiary pt5 options" v-if="product.totals && product.totals.options">
-              <div v-for="opt in product.totals.options" :key="opt.label">
-                <span class="opn">{{ opt.label }}: </span>
-                <span class="opv" v-html="opt.value" />
-              </div>
-            </div>
-            <div class="h6 cl-bg-tertiary pt5 options" v-else-if="product.options">
-              <div v-for="opt in product.options" :key="opt.label">
-                <span class="opn">{{ opt.label }}: </span>
-                <span class="opv" v-html="opt.value" />
-              </div>
-            </div>
+            <!--<div class="h6 cl-bg-tertiary pt5 options" v-if="product.totals && product.totals.options">-->
+            <!--<div v-for="opt in product.totals.options" :key="opt.label">-->
+            <!--<span class="opn">{{ opt.label }}: </span>-->
+            <!--<span class="opv" v-html="opt.value" />-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="h6 cl-bg-tertiary pt5 options" v-else-if="product.options">-->
+            <!--<div v-for="opt in product.options" :key="opt.label">-->
+            <!--<span class="opn">{{ opt.label }}: </span>-->
+            <!--<span class="opv" v-html="opt.value" />-->
+            <!--</div>-->
+            <!--</div>-->
           </div>
           <div>
             <div>
@@ -70,8 +70,18 @@ export default {
 }
 .blend {
   mix-blend-mode: multiply;
+  width: 100px;
+  height: 100px;
 }
 .text-warning {
   color: #ffad2e;
+}
+.product {
+  margin: 0 25px;
+  border-top: 1px solid #e5e6eb;
+}
+.product .h4 {
+  font-weight: 700;
+  line-height: 22px;
 }
 </style>

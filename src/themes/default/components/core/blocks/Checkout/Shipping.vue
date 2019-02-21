@@ -19,9 +19,9 @@
           <div class="col-xs-12 col-md-5 pr30">
             <div class="lh30 flex end-lg" v-if="isFilled && !isActive">
               <a href="#" class="cl-tertiary flex" @click.prevent="edit">
-                <span class="pr5">
-                  {{ $t('Edit shipping') }}
-                </span>
+                <!--<span class="pr5">-->
+                <!--{{ $t('Edit shipping') }}-->
+                <!--</span>-->
                 <i class="material-icons cl-tertiary">edit</i>
               </a>
             </div>
@@ -213,43 +213,43 @@
         </div>
       </div>
     </div>
-    <div class="row pl20" v-if="!isActive && isFilled">
-      <div class="hidden-xs col-sm-2 col-md-1"/>
-      <div class="col-xs-12 col-sm-9 col-md-11">
-        <div class="row fs16 mb35">
-          <div class="col-xs-12 h4" data-testid="shippingAddressSummary">
-            <p>
-              {{ shipping.firstName }} {{ shipping.lastName }}
-            </p>
-            <p>
-              {{ shipping.streetAddress }} {{ shipping.apartmentNumber }}
-            </p>
-            <p>
-              {{ shipping.city }} {{ shipping.zipCode }}
-            </p>
-            <p>
-              <span v-if="shipping.state">{{ shipping.state }}, </span>
-              <span>{{ getCountryName() }}</span>
-            </p>
-            <div v-if="shipping.phoneNumber">
-              <span class="pr15">{{ shipping.phoneNumber }}</span>
-              <tooltip>{{ $t('Phone number may be needed by carrier') }}</tooltip>
-            </div>
-            <!--<div class="col-xs-12">-->
-            <!--<h4>-->
-            <!--{{ $t('Shipping method') }}-->
-            <!--</h4>-->
-            <!--</div>-->
-            <!--<div class="col-md-6 mb15">-->
-            <!--<label class="radioStyled"> {{ getShippingMethod().method_title }} | {{ getShippingMethod().amount | price }}-->
-            <!--<input type="radio" value="" checked disabled name="chosen-shipping-method">-->
-            <!--<span class="checkmark"/>-->
-            <!--</label>-->
-            <!--</div>-->
-          </div>
-        </div>
-      </div>
-    </div>
+    <!--<div class="row pl20" v-if="!isActive && isFilled">-->
+    <!--<div class="hidden-xs col-sm-2 col-md-1"/>-->
+    <!--<div class="col-xs-12 col-sm-9 col-md-11">-->
+    <!--<div class="row fs16 mb35">-->
+    <!--<div class="col-xs-12 h4" data-testid="shippingAddressSummary">-->
+    <!--<p>-->
+    <!--{{ shipping.firstName }} {{ shipping.lastName }}-->
+    <!--</p>-->
+    <!--<p>-->
+    <!--{{ shipping.streetAddress }} {{ shipping.apartmentNumber }}-->
+    <!--</p>-->
+    <!--<p>-->
+    <!--{{ shipping.city }} {{ shipping.zipCode }}-->
+    <!--</p>-->
+    <!--<p>-->
+    <!--<span v-if="shipping.state">{{ shipping.state }}, </span>-->
+    <!--<span>{{ getCountryName() }}</span>-->
+    <!--</p>-->
+    <!--<div v-if="shipping.phoneNumber">-->
+    <!--<span class="pr15">{{ shipping.phoneNumber }}</span>-->
+    <!--<tooltip>{{ $t('Phone number may be needed by carrier') }}</tooltip>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="col-xs-12">&ndash;&gt;-->
+    <!--&lt;!&ndash;<h4>&ndash;&gt;-->
+    <!--&lt;!&ndash;{{ $t('Shipping method') }}&ndash;&gt;-->
+    <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="col-md-6 mb15">&ndash;&gt;-->
+    <!--&lt;!&ndash;<label class="radioStyled"> {{ getShippingMethod().method_title }} | {{ getShippingMethod().amount | price }}&ndash;&gt;-->
+    <!--&lt;!&ndash;<input type="radio" value="" checked disabled name="chosen-shipping-method">&ndash;&gt;-->
+    <!--&lt;!&ndash;<span class="checkmark"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 

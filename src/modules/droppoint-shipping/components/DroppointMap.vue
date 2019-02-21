@@ -285,6 +285,7 @@ export default {
   .droppoint-map {
     .form-label {
       font-size: 14px;
+      font-weight: 700;
     }
     .select-wrapper {
       margin-top: 5px;
@@ -293,6 +294,7 @@ export default {
         border-radius: 5px;
         padding: 10px;
         font-size: 14px;
+        font-weight: 600;
       }
       option {
         font-size: 14px;

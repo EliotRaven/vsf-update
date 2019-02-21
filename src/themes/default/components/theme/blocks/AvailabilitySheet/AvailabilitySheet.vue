@@ -102,7 +102,7 @@ export default {
               margin: 0;
               font-size: 14px;
               line-height: 18px;
-              font-weight: 400;
+              font-weight: 600;
             }
             .subtitle {
               color: #4bad8d;

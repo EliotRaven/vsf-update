@@ -18,7 +18,7 @@
           <order-review class="line relative" :is-active="activeSection.orderReview"/>
           <div id="custom-steps"/>
         </div>
-        <div class="hidden-xs col-sm-5 bg-cl-secondary">
+        <div class="hidden-xs col-sm-5">
           <cart-summary />
         </div>
       </div>
@@ -98,10 +98,30 @@ export default {
   $color-white: color(white);
   $color-black: color(black);
 
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800');
+
   #checkout {
+    h1, h2, h3, h4, p, input, textarea, a, label, span, select, option, .h4 {
+      font-family: 'Open Sans', sans-serif;
+    }
+    h1{
+      font-size: 44px;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 24px;
+      color: #d83b4b;
+    }
+    .material-icons {
+      line-height: 38px;
+    }
+    .brdr-cl-primary {
+      border-color: #e5e6eb;
+    }
     .number-circle {
       width: 35px;
       height: 35px;
+      background: #d83b4b;
 
       @media (max-width: 768px) {
         width: 25px;
