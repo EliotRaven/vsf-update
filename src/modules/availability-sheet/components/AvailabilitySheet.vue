@@ -18,6 +18,10 @@ export default {
     item: {
       type: Object,
       default: null
+    },
+    checked: {
+      type: String,
+      default: null
     }
   },
   data () {
@@ -46,12 +50,15 @@ export default {
           qty: i.qty
         }
       })
-    },
-    notAll () {
-      return this.availability.find(e => e.qty_to_deduct > e.qty_available)
     }
   },
   methods: {
+    mHidePopup () {
+      this.showPopup = false
+    },
+    mShowPopup () {
+      this.showPopup = true
+    },
     findMissing () {
       let skuArr = this.availability.filter(i => i.sku && i.source_code === this.item.id).map(i => i.sku)
       let currentStock = this.availability.filter(i => i.sku && i.source_code === this.item.id)
@@ -64,7 +71,7 @@ export default {
       return [...outOfStock, ...low]
     },
     filterData (item) {
-      return this.productsInCart.find(i => i.sku === item.sku)
+      return this.findMissing().find(i => i.sku === item.sku)
     },
     getData () {
       let data = {

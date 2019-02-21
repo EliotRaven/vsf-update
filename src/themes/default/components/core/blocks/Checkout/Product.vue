@@ -25,7 +25,12 @@
           </div>
           <div>
             <div>
-              <span class="h5 cl-secondary">
+              <span v-if="missingOrLow" class="h5 cl-secondary">
+                <span class="text-warning">
+                  Товар отсутсвует
+                </span>
+              </span>
+              <span v-if="!missingOrLow" class="h5 cl-secondary">
                 {{ $t('Qty') }}
                 <span class="weight-700">
                   {{ product.qty }}
@@ -65,5 +70,8 @@ export default {
 }
 .blend {
   mix-blend-mode: multiply;
+}
+.text-warning {
+  color: #ffad2e;
 }
 </style>

@@ -4,6 +4,10 @@ export const Product = {
     product: {
       type: Object,
       required: true
+    },
+    missingOrLow: {
+      type: Object,
+      required: false
     }
   },
   computed: {

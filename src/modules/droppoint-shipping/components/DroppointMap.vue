@@ -55,7 +55,7 @@
         </div>
         <div v-show="!show" id="panel2" class="tab-pane fade">
           <div :key="index" v-for="(m, index) in droppoints" @click="selectDroppoint(m)">
-            <availability-sheet @get:selected="getSelected" :id="m.id" :stock-id="m.city_id" :item="m" />
+            <availability-sheet @get:selected="getSelected" :id="m.id" :stock-id="m.city_id" :item="m" :checked="selected" />
           </div>
         </div>
       </div>

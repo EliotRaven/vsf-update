@@ -1,5 +1,6 @@
 <template>
   <div class="availability-sheet">
+    <div v-if="showPopup" class="popup-wrapper" @click="mHidePopup" />
     <div class="radioStyled">
       <div class="flex w-100">
         <div class="info"><i>i</i></div>
@@ -8,48 +9,21 @@
           <div class="subtitle">
             <div class="popup" v-if="showPopup">
               <div class="popup-container">
-                <product v-for="product in productsInCart" :key="product.sku" :product="product"/>
-                <div v-if="productsInCart && productsInCart.length"
-                     class="checkout bg-cl-secondary pt10 serif cl-accent">
-
-                  <div v-for="(segment, index) in totals"
-                       :key="index"
-                       class="row pt15 pb20 pl30 pr55"
-                       v-if="segment.code !== 'grand_total'">
-                    <div class="col-xs cl-accent">
-                      {{ segment.title }}
-                    </div>
-                    <div v-if="segment.value != null" class="col-xs align-right cl-accent h4">
-                      {{ segment.value | price }}
-                    </div>
-                  </div>
-
-                  <div class="row pt20 pb20 pl30 pr55 weight-400 h3"
-                       v-for="(segment, index) in totals"
-                       :key="index"
-                       v-if="segment.code === 'grand_total'">
-                    <div class="col-xs">
-                      {{ segment.title }}
-                    </div>
-                    <div class="col-xs align-right">
-                      {{ segment.value | price }}
-                    </div>
-                  </div>
-                </div>
+                <product v-for="product in productsInCart" :missing-or-low="filterData(product)" :key="product.sku" :product="product"/>
               </div>
             </div>
             <div v-if="!findMissing().length" class="all">Забрать здесь</div>
             <div v-if="findMissing().length" class="not-all">
-              Отсутствует: <a href="#" @click.prevent="showPopup = !showPopup">
+              Отсутствует: <a href="#" @click.prevent="mShowPopup">
                 {{ findMissing().length && findMissing()[0].name }}
               </a>
             </div>
           </div>
         </div>
         <label class="button-wrapper">
-          <a href="#" :class="[{'btn-outline btn-danger btn': !findMissing().length}]">
+          <a href="#" :class="[{'btn-outline btn-danger btn': !findMissing().length}, {'check': checked === item.id}]">
             {{ !findMissing().length ? 'Забрать здесь' : `Заказать на ${cDate}` }}
-            <input type="radio" v-model="selected" :value="item.id" >
+            <input type="radio" :id="item.id" v-model="selected" :value="item.id" >
           </a>
         </label>
       </div>
@@ -71,6 +45,17 @@ export default {
   #checkout {
     .availability-sheet {
       position: relative;
+      .popup-wrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
       .radioStyled {
         border-bottom: 1px solid #ebebeb;
         padding: 20px 0 10px;
@@ -251,6 +236,10 @@ export default {
 
               &.underline:after, &:not(.no-underline):hover:after {
                 display: none;
+              }
+              &.check {
+                color: #dd3743;
+                border-bottom-color: #dd3743;
               }
             }
             input {
