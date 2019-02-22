@@ -40,7 +40,7 @@
         <div class="row between-xs middle-xs px15 py5" v-if="isCheckoutPage">
           <div class="col-xs-5 col-md-3 middle-xs">
             <div>
-              <router-link :to="localizedRoute('/')" class="cl-tertiary links custom-btn">
+              <router-link :to="localizedRoute('/')" class="cl-tertiary links">
                 {{ $t('Return to shopping') }}
               </router-link>
             </div>
@@ -108,7 +108,7 @@ export default {
   beforeMount () {
     window.addEventListener('scroll', () => {
       this.isScrolling = true
-    })
+    }, {passive: true})
 
     setInterval(() => {
       if (this.isScrolling) {
@@ -163,25 +163,8 @@ header {
 .header-placeholder {
   height: 54px;
 }
-.custom-btn {
-  display: inline-block;
-  padding: 10px 40px;
-  font-size: 14px;
-  font-weight: 400;
-  background-color: transparent;
-  border: 1px solid #d83b4b;
-  color: #d83b4b;
-  border-radius: 5px;
-  -webkit-transition: all .3s;
-  -o-transition: all .3s;
-  transition: all .3s;
-}
-.custom-btn:hover {
-  background: #d83b4b;
-  color: #ffffff;
-}
-.custom-btn.underline:after, .custom-btn:not(.no-underline):hover:after {
-  display: none;
+.links {
+  text-decoration: underline;
 }
 @media (max-width: 767px) {
   .row.middle-xs {

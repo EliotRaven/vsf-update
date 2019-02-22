@@ -23,7 +23,6 @@
       <div v-if="filterIndex==='color'">
         <color-selector
           context="category"
-          :attribute_code="color"
           code="color"
           v-for="(color, index) in filter"
           :key="index"
@@ -34,7 +33,6 @@
       <div v-else-if="filterIndex==='size'">
         <size-selector
           context="category"
-          :attribute_code="size"
           code="size"
           class="size-select mr10 mb10"
           v-for="(size, index) in sortById(filter)"
@@ -46,7 +44,6 @@
       <div v-else-if="filterIndex==='price'">
         <price-selector
           context="category"
-          :attribute_code="price"
           class="price-select mb10 block"
           code="price"
           v-for="(price, index) in filter"
@@ -55,29 +52,17 @@
           :from="price.from"
           :to="price.to"
           :content="price.label"
-          :label="price.label"
         />
       </div>
-      <div v-else-if="filterIndex==='erin_recommends'">
+      <div v-else>
         <generic-selector
           context="category"
-          :attribute_code="filter.attribute_code"
           class="price-select mb10 block"
           :code="filterIndex"
           v-for="(option, index) in filter"
           :key="index"
           :id="option.id"
           :label="option.label"
-        />
-      </div>
-      <div v-else>
-        <new-selector v-for="(option, index) in filter"
-                      context="category"
-                      attribute_code="new"
-                      code="new"
-                      :key="index"
-                      :id="option.id"
-                      :label="option.label"
         />
       </div>
     </div>
@@ -105,15 +90,13 @@ import ColorSelector from 'theme/components/core/ColorSelector'
 import SizeSelector from 'theme/components/core/SizeSelector'
 import PriceSelector from 'theme/components/core/PriceSelector'
 import GenericSelector from 'theme/components/core/GenericSelector'
-import NewSelector from 'theme/components/core/NewSelector'
 
 export default {
   components: {
     ColorSelector,
     SizeSelector,
     PriceSelector,
-    GenericSelector,
-    NewSelector
+    GenericSelector
   },
   mixins: [Sidebar]
 }

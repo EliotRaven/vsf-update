@@ -1,10 +1,11 @@
 module.exports = {
-  base: '/vue-storefront/',
+  base: '/',
   head: [['link', { rel: 'icon', href: '/favicon.png' }]],
   themeConfig: {
     repo: 'DivanteLtd/vue-storefront',
     docsDir: 'docs',
     editLinks: true,
+    sidebarDepth: 3,
     nav: [
       {
         text: 'YouTube',
@@ -33,6 +34,7 @@ module.exports = {
           title: 'Basics',
           collapsable: false,
           children: [
+            'basics/release-cycle',
             'basics/project-structure',
             'basics/configuration',
             'basics/contributing',
@@ -42,7 +44,7 @@ module.exports = {
             'basics/graphql',
             'basics/ssr-cache',
             'basics/amp',
-            'basics/e2e',
+            'basics/e2e'
           ],
         },
         {
@@ -68,6 +70,7 @@ module.exports = {
             'components/category-page',
             'components/product',
             'components/modal',
+            'components/events-list'
           ],
         },
         {
@@ -80,12 +83,15 @@ module.exports = {
             'data/elastic-queries',
             'data/database-tool',
             'data/entity-types',
+            'data/static-data',
+            'data/data-loader'
           ],
         },
         {
           title: 'Extensions',
           collapsable: false,
           children: [
+            'extensions/introduction',
             'extensions/extending-api',
             'extensions/extending-server-side-routes',
           ],
@@ -95,20 +101,24 @@ module.exports = {
           collapsable: false,
           children: [
             'vuex/introduction',
+            'vuex/vuex-conventions',
             'vuex/product-store',
             'vuex/category-store',
-            'vuex/cart-store',
-            'vuex/checkout-store',
-            'vuex/order-store',
             'vuex/stock-store',
-            'vuex/user-store',
             'vuex/attribute-store',
           ],
         },
         {
           title: 'Modules',
           collapsable: false,
-          children: ['modules/introduction', 'modules/cart'],
+          children: [
+            'modules/introduction',
+            'modules/cart',
+            // 'modules/catalog',
+            'modules/user',
+            'modules/checkout',
+            'modules/order',
+          ],
         },
         {
           title: 'Integrations',
@@ -122,6 +132,7 @@ module.exports = {
             'integrations/tier-prices-sync',
             'integrations/totals-sync',
             'integrations/multistore',
+            'integrations/product-reviews',
           ],
         },
       ],

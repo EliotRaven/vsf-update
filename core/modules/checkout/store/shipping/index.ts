@@ -1,5 +1,5 @@
 import { Module } from 'vuex'
-import RootState from '@vue-storefront/store/types/RootState'
+import RootState from '@vue-storefront/core/types/RootState'
 import ShippingState from '../../types/ShippingState'
 import buildTimeConfig from 'config'
 
@@ -26,7 +26,6 @@ export const shippingModule: Module<ShippingState, RootState> = {
   },
   getters: {
     shippingMethods (state) {
-      state.methods = buildTimeConfig.shipping.methods // TODO: For always only standard method
       return state.methods
     }
   }

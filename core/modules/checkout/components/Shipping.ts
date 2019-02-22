@@ -1,6 +1,7 @@
 import { mapState, mapGetters } from 'vuex'
-import RootState from '@vue-storefront/store/types/RootState'
+import RootState from '@vue-storefront/core/types/RootState'
 const Countries = require('@vue-storefront/i18n/resource/countries.json')
+import toString from 'lodash-es/toString'
 
 export const Shipping = {
   name: 'Shipping',
@@ -62,26 +63,13 @@ export const Shipping = {
   },
   methods: {
     onAfterShippingSet (receivedData) {
-      this.countries.forEach(country => {
-        if (country.name === receivedData.country) {
-          this.shipping.country = country.code
-        }
-      })
-      this.shipping.firstName = receivedData.firstName
-      this.shipping.lastName = receivedData.lastName
-      this.shipping.country = this.shipping.country ? this.shipping.country : ''
-      this.shipping.city = receivedData.city
-      this.shipping.streetAddress = receivedData.streetAddress
-      this.shipping.apartmentNumber = receivedData.apartmentNumber
-      this.shipping.zipCode = receivedData.zipCode
-      this.shipping.company = receivedData.company
+      this.shipping = receivedData
       this.isFilled = true
     },
     onAfterPersonalDetails (receivedData) {
       if (!this.isFilled) {
         this.$store.dispatch('checkout/updatePropValue', ['firstName', receivedData.firstName])
         this.$store.dispatch('checkout/updatePropValue', ['lastName', receivedData.lastName])
-        this.shipping.phoneNumber = receivedData.phoneNumber
       }
     },
     sendDataToCheckout () {
@@ -100,7 +88,7 @@ export const Shipping = {
           let id = this.currentUser.default_shipping
           let addresses = this.currentUser.addresses
           for (let i = 0; i < addresses.length; i++) {
-            if (addresses[i].id === Number(id)) {
+            if (toString(addresses[i].id) === toString(id)) {
               this.myAddressDetails = addresses[i]
               return true
             }
