@@ -12,34 +12,25 @@
         </div>
       </div>
       <product v-for="product in productsInCart" :key="product.sku" :product="product"/>
-      <!--<div v-if="productsInCart && productsInCart.length" class="checkout bg-cl-secondary pt10 serif cl-accent">-->
-
-      <!--<div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total'">-->
-      <!--<div class="col-xs cl-accent">-->
-      <!--{{ segment.title }}-->
-      <!--</div>-->
-      <!--<div v-if="segment.value != null" class="col-xs align-right cl-accent h4">-->
-      <!--{{ segment.value | price }}-->
-      <!--</div>-->
-      <!--</div>-->
-
-      <!--<div class="row pt20 pb20 pl30 pr55 weight-400 h3" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">-->
-      <!--<div class="col-xs">-->
-      <!--{{ segment.title }}-->
-      <!--</div>-->
-      <!--<div class="col-xs align-right">-->
-      <!--{{ segment.value | price }}-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</div>-->
     </div>
     <div class="total">
-      <div class="row mb30 mt10 px25">
-        <div class="col-sm-9">
-          <div class="h4">До сплати: </div>
+      <div v-if="productsInCart && productsInCart.length" class="checkout pt10 cl-accent">
+        <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total'">
+          <div class="col-xs cl-accent">
+            {{ segment.title }}
+          </div>
+          <div v-if="segment.value != null" class="col-xs align-right cl-accent h4">
+            {{ segment.value | price }}
+          </div>
         </div>
-        <div class="col-xs-12 col-md-3">
-          <div class="h4 text-right">Total</div>
+
+        <div class="row pt20 pb20 pl30 pr55 weight-400 h3" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">
+          <div class="col-xs">
+            {{ segment.title }}
+          </div>
+          <div class="col-xs align-right">
+            {{ segment.value | price }}
+          </div>
         </div>
       </div>
     </div>
@@ -83,7 +74,7 @@ export default {
 
 <style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800');
-  #checkout .cart-summary h3 {
+  #checkout .cart-summary h3, .h3 {
     color: #19233c;
     line-height: 40px;
     margin: 0;

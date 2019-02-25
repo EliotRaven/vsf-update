@@ -168,7 +168,15 @@
       "waitForPlatformSync": false,
       "setupVariantByAttributeCode": true,
       "endpoint": "http://localhost:8080/api/product",
-      "defaultFilters": ["color", "size", "price", "erin_recommends"],
+      "defaultFilters": [
+        "brand",
+        "recipe_require",
+        "substance",
+        "color",
+        "size",
+        "price",
+        "erin_recommends"
+      ],
       "filterFieldMapping": {
         "category.name": "category.name.keyword"
       },
