@@ -8,6 +8,12 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      show: [],
+      checked_filters: []
+    }
+  },
   computed: {
     category () {
       return this.$store.state.category.current
@@ -19,6 +25,9 @@ export default {
   methods: {
     sortById (filters) {
       return [...filters].sort((a, b) => { return a.id - b.id })
+    },
+    checkedFilter (val) {
+      return (this.checked_filters.includes(val)) ? this.checked_filters.filter(i => i !== val) : this.checked_filters.push(val)
     },
     resetAllFilters () {
       this.$bus.$emit('filter-reset')

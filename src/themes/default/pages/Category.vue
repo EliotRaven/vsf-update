@@ -23,7 +23,6 @@
     <div class="container pb60">
       <div class="row m0 pt15">
         <div class="col-md-3 start-xs category-filters">
-          <pre>{{ filters }} 3</pre>
           <sidebar :filters="filters.available"/>
         </div>
         <div class="col-md-3 start-xs mobile-filters" v-show="mobileFilters">
