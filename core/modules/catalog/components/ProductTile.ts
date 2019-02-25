@@ -11,6 +11,7 @@ export const ProductTile = {
   data () {
     return {
       clicks: 0,
+      like: false,
       placeholder: '/assets/placeholder.jpg'
     }
   },
