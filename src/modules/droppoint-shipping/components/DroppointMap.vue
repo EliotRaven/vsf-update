@@ -58,7 +58,7 @@
               :position="m.position"
               :animation="selected === m.id ? 1 : 0"
               :clickable="true"
-              :icon="m.icon"
+              :icon="{url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAzCAYAAAAKLSELAAAACXBIWXMAAAsSAAALEgHS3X78AAACf0lEQVRoBdWZ35HaMBCHf6GB3LtHAx0cHUSpIHQQUsG5g5AOoAPcwXUQ0QF0gMejd1IBmWXWYLySDv/B1n0z94BlzHe71spafzmfz2iLVXoBYA5AA5gBmNYutQNwArAH8J4UZt/mpxpLWqVJKgVAgl/FCWFyAFv6SwpzDJ7ZRpLl1gC+icF2bACsksKcepG0Sq8A/BYD3fkHYJkU5j10paCkVfoFgAHwKgb7ZZMUJvVdcSKO3ATnAwkSb1bprTjKOCPJEdw7ZuuzyZLCLOu/ISJZSfHQgsRPq/S6flBI0owbKMU+3rj+XrlLt1WaivJfz5eHhOrpvCxP9Uh6b96BmfKCgTtJq/RypPvQR8rz4y6S3jo1ErTkLq+SVunZyJPFR4pKJBeek8ZmSgGMXZJYlJJzMRQP8wnPoKbPhUNySXfMUSReXMtibLx+BkmxLMbIYcLPjTFzmjyyERqZY5nuXcSS+1LSiKF4MKVkcEs5Ijl1PS6S3P7II5S8BK9agsQGKALWdcktdxRiISv7RVdJLkUxRfPqUl9x1pFEM6u2Ce8kI4rmqvrB12Y5jrhzFM0r3wOG6McMRF6PolcyKQytQJkYeD6p61nCKcmkAxf4zNdM9UryfzRU2vNQc8IriVva/4iBfqGSt3ClucQ5u+tYpSkNP8RAP/xKChNslAUjWYHSfhBHu7P5SBANX5HMeKvR1x7d2Xp28fBGjBd73dOyeQhNlDqNdou8nnYVJUEdmiidJHETbdvgaiyItvtuLk3fG0a0lSDavACtUnkh9dFkai2Irh2MB+/RXRdBdI1kCUd062hpP1xmQvQiSXCfk0QvbwzoNkgKIx67RpV8GgD+A2F+7bN9cUrnAAAAAElFTkSuQmCC'}"
               @click="selectDroppoint(m)" />
           </gmap-map>
         </div>
@@ -297,6 +297,10 @@ export default {
 </script>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800');
+  .droppoint-map * {
+    font-family: 'Open Sans', sans-serif;
+  }
   .map-container {
     width: 100%;
     height: 400px;

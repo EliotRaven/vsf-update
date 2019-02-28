@@ -16,18 +16,18 @@
         <div class="row">
           <div class="col-md-6 pl20 pr20">
             <h1>{{ $t('Thank You') }}</h1>
-            <p>
+            <div class="py15">
               <b>{{ $t('Order') }} <span>№326871</span> {{ $t('issued successfully.') }}</b>
-            </p>
+            </div>
             <p>
               1 {{ $t('ordered good worth') }} 400 Грн {{ $t('will be available an hour later at:') }}
               <b>м. Київ, вул. Годовицького 12(м.Театральна), Аптка "Подорожник".</b>
               {{ $t('Payment of the goods is carried out on the spot upon receipt.') }}
-
-              <span class="form-control">
-                <button>{{ $t('Go home') }}</button>
-              </span>
             </p>
+
+            <div class="form-control">
+              <button>{{ $t('Go home') }}</button>
+            </div>
             <!--<h3 v-if="OnlineOnly" >-->
             <!--{{ $t('Your purchase') }}-->
             <!--</h3>-->
@@ -63,9 +63,10 @@
                       :center="center"
                       :zoom="12"
                       :options="{streetViewControl:false, fullscreenControl: false}">
-              <gmap-marker :position="position"
-                           :clickable="false"
-                           :icon="icon"/>
+              <gmap-marker class="marker"
+                           :icon="{url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAzCAYAAAAKLSELAAAACXBIWXMAAAsSAAALEgHS3X78AAACf0lEQVRoBdWZ35HaMBCHf6GB3LtHAx0cHUSpIHQQUsG5g5AOoAPcwXUQ0QF0gMejd1IBmWXWYLySDv/B1n0z94BlzHe71spafzmfz2iLVXoBYA5AA5gBmNYutQNwArAH8J4UZt/mpxpLWqVJKgVAgl/FCWFyAFv6SwpzDJ7ZRpLl1gC+icF2bACsksKcepG0Sq8A/BYD3fkHYJkU5j10paCkVfoFgAHwKgb7ZZMUJvVdcSKO3ATnAwkSb1bprTjKOCPJEdw7ZuuzyZLCLOu/ISJZSfHQgsRPq/S6flBI0owbKMU+3rj+XrlLt1WaivJfz5eHhOrpvCxP9Uh6b96BmfKCgTtJq/RypPvQR8rz4y6S3jo1ErTkLq+SVunZyJPFR4pKJBeek8ZmSgGMXZJYlJJzMRQP8wnPoKbPhUNySXfMUSReXMtibLx+BkmxLMbIYcLPjTFzmjyyERqZY5nuXcSS+1LSiKF4MKVkcEs5Ijl1PS6S3P7II5S8BK9agsQGKALWdcktdxRiISv7RVdJLkUxRfPqUl9x1pFEM6u2Ce8kI4rmqvrB12Y5jrhzFM0r3wOG6McMRF6PolcyKQytQJkYeD6p61nCKcmkAxf4zNdM9UryfzRU2vNQc8IriVva/4iBfqGSt3ClucQ5u+tYpSkNP8RAP/xKChNslAUjWYHSfhBHu7P5SBANX5HMeKvR1x7d2Xp28fBGjBd73dOyeQhNlDqNdou8nnYVJUEdmiidJHETbdvgaiyItvtuLk3fG0a0lSDavACtUnkh9dFkai2Irh2MB+/RXRdBdI1kCUd062hpP1xmQvQiSXCfk0QvbwzoNkgKIx67RpV8GgD+A2F+7bN9cUrnAAAAAElFTkSuQmCC'}"
+                           :position="center"
+                           :clickable="false"/>
             </gmap-map>
             <!--<h3>-->
             <!--{{ $t('What we can improve?') }}-->
@@ -120,7 +121,6 @@ export default {
     return {
       feedback: '',
       center: {lat: 55.488351, lng: 9.479296},
-      position: [],
       icon: ''
     }
   },
@@ -201,7 +201,34 @@ export default {
 </script>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800');
+  .thank-you-page * {
+    font-family: 'Open Sans', sans-serif;
+  }
   .thank-you-page {
+    h1 {
+      margin: 0 0 30px;
+    }
+    .row {
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+      align-content: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
     .flex-container {
       display: -ms-flexbox;
       display: -webkit-flex;
@@ -233,6 +260,51 @@ export default {
       -webkit-align-self: auto;
       -ms-flex-item-align: auto;
       align-self: auto;
+    }
+    b {
+      font-weight: 700;
+      color: #19233c;
+    }
+    p {
+      font-weight: 400;
+      color: #8b93a6;
+      font-size: 16px;
+      line-height: 24px;
+      b {
+        font-weight: 600;
+        span {
+          color: #e41c3f;
+        }
+      }
+    }
+    .form-control {
+      padding-top: 30px;
+      button {
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+        display: inline-block;
+        background-color: transparent;
+        padding: 20px 0;
+        width: 50%;
+        color: #e41c3f;
+        border: 1px solid #e41c3f;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        font-size: 16px;
+        line-height: 20px;
+
+        &:hover {
+          background: #e41c3f;
+          color: #ffffff;
+        }
+      }
+    }
+    .marker {
+      background: #e41c3f;
     }
  }
 </style>
