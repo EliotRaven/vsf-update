@@ -4,12 +4,12 @@ export const dps = [
       'lat': 49.8298839,
       'lng': 23.9685231
     },
-    'name': 'Подорожник №11',
+    'name': 'Apteka',
     'id': '5f8a34f5-8b66-11e8-80c4-eec2ef9f58ac',
     'country': 'Ukraine',
-    'city': 'Львів',
+    'city': 'Lviv',
     'zipcode': '69000',
-    'streetname': 'Виговського',
+    'streetname': 'Vugovskogo',
     'streetname2': '3',
     'city_id': 2
   },
@@ -18,12 +18,12 @@ export const dps = [
       'lat': 50.4731664,
       'lng': 30.4470687
     },
-    'name': 'Подорожник тест №173',
+    'name': 'Aptekaa',
     'id': '90cd8262-94bf-11e8-80c4-eec2ef9f58ac',
     'country': 'Ukraine',
-    'city': 'Київ',
+    'city': 'Kyiv',
     'zipcode': '69000',
-    'streetname': 'Теліги',
+    'streetname': 'Teligu',
     'streetname2': '17',
     'city_id': 3
   },
@@ -32,12 +32,12 @@ export const dps = [
       'lat': 49.8312108,
       'lng': 23.9890196
     },
-    'name': 'Подорожник №222',
+    'name': 'Aptekaq',
     'id': '51cd3ca2-8b66-11e8-80c4-eec2ef9f58ac',
     'country': 'Ukraine',
-    'city': 'Львів',
+    'city': 'Lviv',
     'zipcode': '02000',
-    'streetname': 'Кульпарківська',
+    'streetname': 'Kylparkivska',
     'streetname2': '35',
     'city_id': 2
   }
