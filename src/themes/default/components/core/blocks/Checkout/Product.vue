@@ -1,5 +1,5 @@
 <template>
-  <div class="row p25 between-xs">
+  <div class="row py25 between-xs product">
     <img class="blend" v-lazy="thumbnail">
     <div class="col-xs">
       <div class="row">
@@ -65,6 +65,10 @@ export default {
 </script>
 
 <style scoped>
+.product {
+  border-top: 1px solid #ebebeb;
+  margin: 0 25px;
+}
 .price-original {
   text-decoration: line-through;
 }
