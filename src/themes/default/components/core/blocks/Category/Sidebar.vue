@@ -7,9 +7,8 @@
            v-if="filter.length">
         <div class="card-header py10">
           <input type="checkbox" class="hidden-radio" :value="filterIndex" v-model="show">
-          {{ $t(filterIndex + '_filter') }}
-          <i v-if="!show.includes(filterIndex)">+</i>
-          <i v-else>-</i>
+          <b>{{ $t(filterIndex + '_filter') }}</b>
+          <i class="material-icons">{{ show.includes(filterIndex) ? 'remove' : 'add' }}</i>
         </div>
         <div class="card-body" v-show="show.includes(filterIndex)">
           <div v-if="filterIndex==='price'">
@@ -27,16 +26,16 @@
             />
           </div>
           <div v-else>
-            <div class="form-control pt10"
-                 v-for="(item, index) in filter"
-                 :key="index"
-                 :id="item.id">
-              <div class="custom-checkbox dib relative">
-                <input type="checkbox" class="m0 no-outline" :id="item.label" :value="item.label" v-model="checked_filters" >
-                <label class="pl35 lh30 h4 pointer" :for="item.label" />
-              </div>
-              <div class="label dib">{{ item.label }}</div>
-            </div>
+            <custom-selector context="category"
+                             :attribute_code="item"
+                             class="price-select block"
+                             :code="filterIndex"
+                             v-for="(item, index) in filter"
+                             :key="index"
+                             :id="item.id"
+                             :content="item.label"
+                             :label="item.label"
+            />
           </div>
         </div>
       </div>
@@ -141,6 +140,7 @@ import ColorSelector from 'theme/components/core/ColorSelector'
 import SizeSelector from 'theme/components/core/SizeSelector'
 import PriceSelector from 'theme/components/core/PriceSelector'
 import GenericSelector from 'theme/components/core/GenericSelector'
+import CustomSelector from 'theme/components/core/CustomSelector'
 
 import BaseCheckbox from '@vue-storefront/theme-default/components/core/blocks/Form/BaseCheckbox'
 
@@ -150,7 +150,8 @@ export default {
     SizeSelector,
     PriceSelector,
     GenericSelector,
-    BaseCheckbox
+    BaseCheckbox,
+    CustomSelector
   },
   mixins: [Sidebar]
 }
@@ -159,6 +160,8 @@ export default {
 <style lang="scss">
   @import '~theme/css/variables/colors';
   @import '~theme/css/helpers/functions/color';
+  $color-event: color(tertiary);
+  $color-active: color(accent);
   $color-silver: color(silver);
   $color-active: color(secondary);
   $color-white: color(white);
@@ -276,10 +279,13 @@ export default {
         position: relative;
         padding-right: 30px;
         cursor: pointer;
+        b {
+          font-weight: 600;
+        }
         i {
           position: absolute;
           right: 10px;
-          top: 2px;
+          top: 11px;
           font-style: normal;
           font-size: 20px;
         }

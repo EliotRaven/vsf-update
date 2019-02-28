@@ -3,8 +3,8 @@
     <header class="py35 pl20">
       <div class="container">
         <breadcrumbs :routes="breadcrumbs.routes" :active-route="category.name" />
-        <div class="row middle-sm">
-          <h1 class="col-sm-9 category-title mb10"> {{ category.name }} </h1>
+        <div class="row middle-sm my20">
+          <h1 class="col-sm-9 category-title m0"> {{ category.name }} </h1>
           <div class="sorting col-sm-3 flex col-md-3 col-xs-3 align-right"><sort-by /></div>
         </div>
       </div>

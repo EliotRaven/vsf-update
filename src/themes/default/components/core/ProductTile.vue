@@ -29,8 +29,6 @@
               {{ (like) ? 'favorite' : 'favorite_border' }}
             </i>
           </a>
-          <!--<i class="hit-label label-form">Hit</i>-->
-          <!--<i class="new-label label-form">Новинка</i>-->
         </div>
       </div>
       <div class="column p10">
@@ -56,7 +54,7 @@
             <span class="lh30 cl-secondary real-price"
                   v-if="!product.special_price && parseFloat(product.priceInclTax) > 0 && !onlyImage"
             >
-              {{ product.priceInclTax }}<sup>{{ product.priceInclTax | price | custom }}</sup>
+              {{ parseInt(product.priceInclTax).toFixed(2) }}<sup>{{ product.priceInclTax | price | custom }}</sup>
             </span>
           </div>
           <div class="add-to-cart dib">
@@ -91,8 +89,7 @@ export default {
   },
   filters: {
     custom (val) {
-      let r = val.match(/\W+/g)
-      return r
+      return val.match(/\W+/g)[1]
     }
   },
   methods: {
