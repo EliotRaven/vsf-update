@@ -74,7 +74,7 @@ export default {
       width: 22px;
       height: 22px;
       background-color: $color-white;
-      border: 1px solid $color-silver;
+      border: 1px solid #009777;
       cursor: pointer;
     }
   }
@@ -86,21 +86,22 @@ export default {
     opacity: 0;
     &:checked + label {
       &:before {
-        background-color: $color-silver;
-        border-color: $color-silver;
+        background-color: #009777;
+        border-color: #009777;
         cursor: pointer;
+        border-radius: 3px;
       }
       &:after {
         content: '';
         position: absolute;
         top: 9px;
-        left: 5px;
+        left: 6px;
         width: 11px;
         height: 5px;
-        border: 3px solid $color-white;
+        border: 2px solid $color-white;
         border-top: none;
         border-right: none;
-        background-color: $color-silver;
+        background-color: #009777;
         transform: rotate(-45deg);
       }
     }
@@ -119,7 +120,7 @@ export default {
       &:hover,
       &:focus {
         &:before {
-          border-color: $color-silver;
+          border-color: #009777;
           cursor: not-allowed;
         }
       }
