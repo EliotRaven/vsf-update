@@ -21,8 +21,8 @@
             </div>
             <p>
               {{ order.products.length }}
-              {{ $t('ordered good worth') }}
-              {{ total }} {{ $t('Currency') }}
+              {{ $t('Product') }}
+              <!--{{ total }} {{ $t('Currency') }}-->
               {{ $t('will be available an hour later at:') }}
               <b>
                 {{ $t('m.') }} {{ orderData.city }},
