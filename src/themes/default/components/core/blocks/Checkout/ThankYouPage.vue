@@ -15,13 +15,22 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 pl20 pr20">
-            <h1>{{ $t('Thank You') }}</h1>
+            <h1>{{ $t('Thank You!') }}</h1>
             <div class="py15">
-              <b>{{ $t('Order') }} <span>№326871</span> {{ $t('issued successfully.') }}</b>
+              <b>{{ $t('Order') }} <span>№{{ lastOrderConfirmation.magentoOrderId }}</span> {{ $t('issued successfully.') }}</b>
             </div>
             <p>
-              1 {{ $t('ordered good worth') }} 400 Грн {{ $t('will be available an hour later at:') }}
-              <b>м. Київ, вул. Годовицького 12(м.Театральна), Аптка "Подорожник".</b>
+              {{ order.products.length }}
+              {{ $t('ordered good worth') }}
+              {{ total }} {{ $t('Currency') }}
+              {{ $t('will be available an hour later at:') }}
+              <b>
+                {{ $t('m.') }} {{ orderData.city }},
+                {{ $t('st.') }} {{ orderData.street[0] }}
+                {{ orderData.street[1] }}
+                <span v-if="orderData.metro">({{ $t('m.') }}{{ orderData.metro }})</span>,
+                {{ $t('Pharmacy') }} "{{ orderData.firstname }}".
+              </b>
               {{ $t('Payment of the goods is carried out on the spot upon receipt.') }}
             </p>
 
@@ -125,6 +134,15 @@ export default {
     }
   },
   computed: {
+    order () {
+      return this.$store.state.order.last_order_confirmation.order
+    },
+    total () {
+      return parseInt(this.order.products.reduce((p, c) => p + c.final_price, '')).toFixed(2)
+    },
+    orderData () {
+      return this.$store.state.order.last_order_confirmation.order.addressInformation.shippingAddress
+    },
     lastOrderConfirmation () {
       return this.$store.state.order.last_order_confirmation ? this.$store.state.order.last_order_confirmation.confirmation : {}
     },

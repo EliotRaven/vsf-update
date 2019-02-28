@@ -52,22 +52,22 @@ export const module = {
         get ({ commit, dispatch }, data) {
             const { token, endpoint } = config.availabilitySheet;
 
-            // axios({
-            //     method: 'post',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': token,
-            //         'Accept': '*/*'
-            //     },
-            //     url: endpoint,
-            //     data
-            // }).then(res => {
-            //     commit(types.SET_AVAILABILITY_SHEET, res.data.source_selection_items)
-            // }).catch(err => {
-            //     console.log(err)
-            // });
+            axios({
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token,
+                    'Accept': '*/*'
+                },
+                url: endpoint,
+                data
+            }).then(res => {
+                commit(types.SET_AVAILABILITY_SHEET, res.data.source_selection_items)
+            }).catch(err => {
+                console.log(err)
+            });
 
-            commit(types.SET_AVAILABILITY_SHEET, initialData.source_selection_items)
+            // commit(types.SET_AVAILABILITY_SHEET, initialData.source_selection_items)
 
         }
     },

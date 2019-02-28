@@ -157,154 +157,154 @@ export default {
 </script>
 
 <style lang="scss">
-    @import '~theme/css/variables/colors';
-    @import '~theme/css/helpers/functions/color';
-    $color-silver: color(silver);
-    $color-active: color(secondary);
-    $color-white: color(white);
+  @import '~theme/css/variables/colors';
+  @import '~theme/css/helpers/functions/color';
+  $color-silver: color(silver);
+  $color-active: color(secondary);
+  $color-white: color(white);
 
-    .custom-checkbox {
-        label {
-            user-select: none;
-            &:before {
-                content: '';
-                position: absolute;
-                top: 3px;
-                left: 0;
-                width: 22px;
-                height: 22px;
-                background-color: $color-white;
-                border: 1px solid #009777;
-                cursor: pointer;
-            }
-        }
+  .custom-checkbox {
+    label {
+      user-select: none;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 0;
+        width: 22px;
+        height: 22px;
+        background-color: $color-white;
+        border: 1px solid #009777;
+        cursor: pointer;
+      }
+    }
 
-        input {
-            position: absolute;
-            top: 3px;
-            left: 0;
-            opacity: 0;
-            &:checked + label {
-                &:before {
-                    background-color: #009777;
-                    border-color: #009777;
-                    cursor: pointer;
-                    border-radius: 3px;
-                }
-                &:after {
-                    content: '';
-                    position: absolute;
-                    top: 9px;
-                    left: 6px;
-                    width: 11px;
-                    height: 5px;
-                    border: 2px solid $color-white;
-                    border-top: none;
-                    border-right: none;
-                    background-color: #009777;
-                    transform: rotate(-45deg);
-                }
-            }
-            &:hover,
-            &:focus {
-                + label {
-                    &:before {
-                        border-color: $color-active;
-                    }
-                }
-            }
-            &:disabled + label {
-                cursor: not-allowed;
-                opacity: 0.5;
-                pointer-events: none;
-                &:hover,
-                &:focus {
-                    &:before {
-                        border-color: #009777;
-                        cursor: not-allowed;
-                    }
-                }
-            }
+    input {
+      position: absolute;
+      top: 3px;
+      left: 0;
+      opacity: 0;
+      &:checked + label {
+        &:before {
+          background-color: #009777;
+          border-color: #009777;
+          cursor: pointer;
+          border-radius: 3px;
         }
+        &:after {
+          content: '';
+          position: absolute;
+          top: 9px;
+          left: 6px;
+          width: 11px;
+          height: 5px;
+          border: 2px solid $color-white;
+          border-top: none;
+          border-right: none;
+          background-color: #009777;
+          transform: rotate(-45deg);
+        }
+      }
+      &:hover,
+      &:focus {
+        + label {
+          &:before {
+            border-color: $color-active;
+          }
+        }
+      }
+      &:disabled + label {
+        cursor: not-allowed;
+        opacity: 0.5;
+        pointer-events: none;
+        &:hover,
+        &:focus {
+          &:before {
+            border-color: #009777;
+            cursor: not-allowed;
+          }
+        }
+      }
     }
-    .form-label {
-        font-size: 14px;
-        font-weight: 700;
+  }
+  .form-label {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .select-wrapper {
+    margin-top: 5px;
+    select {
+      border: 1px solid #bdbdbd;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 600;
     }
-    .select-wrapper {
-        margin-top: 5px;
-        select {
-            border: 1px solid #bdbdbd;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        option {
-            font-size: 14px;
-        }
-        &::after {
-            border: 1px solid #000;
-            border-width: 0 0 1px 1px;
-            width: 5px;
-            height: 5px;
-            line-height: 0;
-            font-size: 0;
-            -webkit-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            -o-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-            top: 14px;
-        }
+    option {
+      font-size: 14px;
     }
-    .accordion {
-        .card {
-            background: #f2f3f7;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-            padding: 10px;
-            -webkit-transition: all .3s;
-            -moz-transition: all .3s;
-            -ms-transition: all .3s;
-            -o-transition: all .3s;
-            transition: all .3s;
-            &:hover {
-                background: #e5e6eb;
-            }
-            .card-header {
-                position: relative;
-                padding-right: 30px;
-                cursor: pointer;
-                i {
-                    position: absolute;
-                    right: 10px;
-                    top: 2px;
-                    font-style: normal;
-                    font-size: 20px;
-                }
-                .hidden-radio {
-                    opacity: 0;
-                    display: block;
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    z-index: 2;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    top: 0;
-                    margin: 0;
-                    cursor: pointer;
-                }
-            }
-            .card-body {
-                .dib {
-                    display: inline-block;
-                    vertical-align: middle;
-                    line-height: 24px;
-                }
-            }
-        }
+    &::after {
+      border: 1px solid #000;
+      border-width: 0 0 1px 1px;
+      width: 5px;
+      height: 5px;
+      line-height: 0;
+      font-size: 0;
+      -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      top: 14px;
     }
+  }
+  .accordion {
+    .card {
+      background: #f2f3f7;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      padding: 10px;
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -ms-transition: all .3s;
+      -o-transition: all .3s;
+      transition: all .3s;
+      &:hover {
+        background: #e5e6eb;
+      }
+      .card-header {
+        position: relative;
+        padding-right: 30px;
+        cursor: pointer;
+        i {
+          position: absolute;
+          right: 10px;
+          top: 2px;
+          font-style: normal;
+          font-size: 20px;
+        }
+        .hidden-radio {
+          opacity: 0;
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          margin: 0;
+          cursor: pointer;
+        }
+      }
+      .card-body {
+        .dib {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: 24px;
+        }
+      }
+    }
+  }
 </style>
