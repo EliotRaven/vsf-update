@@ -1,6 +1,6 @@
 <template>
   <button-full @click.native="addToCart(product)" :disabled="canBeAdded(product)" data-testid="addToCart">
-    {{ $t('Add to cart') }}
+    <i class="material-icons">add_shopping_cart</i>
   </button-full>
 </template>
 

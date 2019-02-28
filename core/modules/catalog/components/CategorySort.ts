@@ -12,7 +12,7 @@ export const CategorySort = {
     }
   },
   computed: {
-    sortingOptions () {
+    soringOptions () {
       return this.$store.state.config.products.sortByAttributes
     }
   }

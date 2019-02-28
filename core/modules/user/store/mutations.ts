@@ -1,14 +1,13 @@
 import { MutationTree } from 'vuex'
 import * as types from './mutation-types'
 import UserState from '../types/UserState'
-import { Logger } from '@vue-storefront/core/lib/logger'
 
 const mutations: MutationTree<UserState> = {
   [types.USER_TOKEN_CHANGED] (state, payload) {
     state.token = payload.newToken
     if (payload.meta && payload.meta.refreshToken) {
       state.refreshToken = payload.meta.refreshToken // store the refresh token
-      Logger.log('Refresh token is set to' + state.refreshToken, 'user')()
+      console.log('Refresh token is set to', state.refreshToken)
     }
   },
   [types.USER_START_SESSION] (state) {

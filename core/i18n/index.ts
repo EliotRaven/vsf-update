@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import config from 'config'
-import { Logger } from '@vue-storefront/core/lib/logger'
 
 Vue.use(VueI18n)
 
@@ -28,7 +27,7 @@ export function loadLanguageAsync (lang: string): Promise<string> {
           loadedLanguages.push(lang)
           return setI18nLanguage(lang)
         }).catch(err => {
-          Logger.debug('Unable to load translation')()
+          console.debug('Unable to load translation')
           return ''
         })
       }

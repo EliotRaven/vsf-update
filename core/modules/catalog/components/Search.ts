@@ -2,8 +2,7 @@ import { mapState } from 'vuex'
 import i18n from '@vue-storefront/i18n'
 import onEscapePress from '@vue-storefront/core/mixins/onEscapePress'
 import { prepareQuickSearchQuery } from '@vue-storefront/core/modules/catalog/queries/searchPanel'
-import RootState from '@vue-storefront/core/types/RootState'
-import { Logger } from '@vue-storefront/core/lib/logger'
+import RootState from '@vue-storefront/store/types/RootState'
 
 export const Search = {
   name: 'SearchPanel',
@@ -15,7 +14,8 @@ export const Search = {
       start: 0,
       placeholder: i18n.t('Type what you are looking for...'),
       emptyResults: false,
-      readMore: true
+      readMore: true,
+      open: false
     }
   },
   methods: {
@@ -26,6 +26,7 @@ export const Search = {
       this.$store.commit('ui/setSidebar', false)
       this.$store.commit('ui/setMicrocart', false)
       this.$store.commit('ui/setSearchpanel', false)
+      this.open = false
     },
     buildSearchQuery (queryText) {
       let searchQuery = prepareQuickSearchQuery(queryText)
@@ -41,7 +42,7 @@ export const Search = {
           this.start = this.start + this.size
           this.emptyResults = resp.items.length < 1
         }).catch((err) => {
-          Logger.error(err, 'components-search')()
+          console.error(err)
         })
       } else {
         this.products = []
@@ -61,7 +62,7 @@ export const Search = {
           this.start = this.start + this.size
           this.emptyResults = this.products.length < 1
         }).catch((err) => {
-          Logger.error(err, 'components-search')()
+          console.error(err)
         })
       } else {
         this.products = []

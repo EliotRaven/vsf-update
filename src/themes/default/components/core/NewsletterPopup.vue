@@ -7,7 +7,7 @@
       <form @submit.prevent="submit(onSuccesfulSubmission)" novalidate>
         <div class="mb35">
           <p class="h4">
-            {{ $t('Sign up to our newsletter and receive a coupon for 10% off!') }}
+            {{ $t('Sign up to our newsletter and receive a coupon for 100% off!') }}
           </p>
           <base-input
             focus
@@ -49,11 +49,6 @@ import Modal from 'theme/components/core/Modal'
 import BaseInput from 'theme/components/core/blocks/Form/BaseInput.vue'
 
 export default {
-  mounted () {
-    this.$nextTick(() => {
-      this.$bus.$emit('modal-show', 'modal-newsletter')
-    })
-  },
   beforeDestroy () {
     this.$off('validation-error')
   },

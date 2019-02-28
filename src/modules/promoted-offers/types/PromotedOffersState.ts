@@ -3,6 +3,5 @@ export default interface PromotedOffersState {
     mainBanners: any[],
     smallBanners: any[],
     productBanners: any[]
-  },
-  headImage: Object
+  }
 }

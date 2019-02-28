@@ -1,4 +1,4 @@
-import { productThumbnailPath } from '@vue-storefront/core/helpers'
+import { productThumbnailPath } from '@vue-storefront/store/helpers'
 
 export const ProductTile = {
   name: 'ProductTile',
@@ -33,5 +33,13 @@ export const ProductTile = {
     isNew () {
       return this.product.new === '1' ? 'new' : ''
     }
-  }
+  },
+    methods: {
+      toggleLike(){
+        this.like = !this.like
+      },
+      addToCart () {
+        return
+      }
+    }
 }

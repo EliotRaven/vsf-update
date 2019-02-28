@@ -1,15 +1,13 @@
-import { buildFilterProductsQuery } from '@vue-storefront/core/helpers'
-import { mapGetters } from 'vuex';
+import { buildFilterProductsQuery } from '@vue-storefront/store/helpers'
 
 export default {
   name: 'CategoryFilters',
   computed: {
-    ...mapGetters('category', ['getActiveCategoryFilters', 'getCurrentCategoryProductQuery', 'getAllCategoryFilters']),
     filters () {
-      return this.getAllCategoryFilters
+      return this.$store.state.category.filters
     },
     activeFilters () {
-      return this.getActiveCategoryFilters
+      return this.$store.state.category.filters.chosen
     }
   },
   methods: {
@@ -21,11 +19,8 @@ export default {
       // todo: get rid of this one
       this.$bus.$emit('filter-reset')
       this.$store.dispatch('category/resetFilters')
-      this.$store.dispatch('category/searchProductQuery', {})
-      this.$store.dispatch('category/mergeSearchOptions', {
-        searchProductQuery: buildFilterProductsQuery(this.category, this.activeFilters)
-      })
-      this.$store.dispatch('category/products', this.getCurrentCategoryProductQuery)
+      this.$store.dispatch('category/searchProductQuery', buildFilterProductsQuery(this.category, this.activeFilters))
+      this.$store.dispatch('category/products', this.$store.state.category.current_product_query)
     }
   }
 }

@@ -1,23 +1,3 @@
-import { Logger } from '@vue-storefront/core/lib/logger'
-
-function isSpecialPriceActive(fromDate, toDate) {
-  const now = new Date()
-  fromDate = new Date(fromDate) || false
-  toDate = new Date(toDate) || false
-
-  if (fromDate && toDate) {
-    return fromDate < now && toDate > now
-  }
-
-  if (fromDate && !toDate) {
-    return fromDate < now
-  }
-
-  if (!fromDate && toDate) {
-    return toDate > now
-  }
-}
-
 export function updateProductPrices (product, rate, sourcePriceInclTax = false) {
   const rateFactor = parseFloat(rate.rate) / 100
   product.price = parseFloat(product.price)
@@ -42,7 +22,7 @@ export function updateProductPrices (product, rate, sourcePriceInclTax = false) 
   product.specialPriceInclTax = specialPriceExclTax + product.specialPriceTax
 
   if (product.special_price && (product.special_price < product.price)) {
-    if (!isSpecialPriceActive(product.special_from_date, product.special_to_date)) {
+    if ((product.special_to_date && new Date(product.special_to_date) < new Date()) || (product.special_from_date && new Date(product.special_from_date) > new Date())) {
       product.special_price = 0 // out of the dates period
     } else {
       product.originalPrice = priceExclTax
@@ -87,7 +67,7 @@ export function updateProductPrices (product, rate, sourcePriceInclTax = false) 
       configurableChild.specialPriceInclTax = specialPriceExclTax + configurableChild.specialPriceTax
 
       if (configurableChild.special_price && (configurableChild.special_price < configurableChild.price)) {
-        if (!isSpecialPriceActive(configurableChild.special_from_date, configurableChild.special_to_date)) {
+        if ((configurableChild.special_to_date && new Date(configurableChild.special_to_date) < new Date()) || (configurableChild.special_from_date && new Date(configurableChild.special_from_date) > new Date())) {
           configurableChild.special_price = 0 // out of the dates period
         } else {
           configurableChild.originalPrice = priceExclTax
@@ -126,18 +106,18 @@ export function calculateProductTax (product, taxClasses, taxCountry = 'PL', tax
         if (rate.tax_country_id === taxCountry && (rate.region_name === taxRegion || rate.tax_region_id === 0 || !rate.region_name)) {
           updateProductPrices(product, rate, sourcePriceInclTax)
           rateFound = true
-          Logger.debug('Tax rate ' + rate.code + ' = ' + rate.rate + '% found for ' + taxCountry + ' / ' + taxRegion, 'helper-tax')()
+          console.debug('Tax rate ' + rate.code + ' = ' + rate.rate + '% found for ' + taxCountry + ' / ' + taxRegion)
           break
         }
       }
     } else {
-      Logger.debug('No such tax class id: ' + product.tax_class_id, 'helper-tax')()
+      console.debug('No such tax class id: ' + product.tax_class_id)
     }
   } else  {
-    Logger.debug('No  tax class set for: ' + product.sku, 'helper-tax')()
+    console.debug('No  tax class set for: ' + product.sku)
   }
   if (!rateFound) {
-    Logger.log('No such tax class id: ' + product.tax_class_id + ' or rate not found for ' + taxCountry + ' / ' + taxRegion, 'helper-tax')()
+    console.log('No such tax class id: ' + product.tax_class_id + ' or rate not found for ' + taxCountry + ' / ' + taxRegion)
     updateProductPrices(product, {rate: 0})
 
     product.priceInclTax = product.price

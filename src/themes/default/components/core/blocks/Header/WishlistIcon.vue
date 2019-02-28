@@ -5,7 +5,11 @@
     @click="toggleWishlistPanel"
     :aria-label="$t('Open wishlist')"
   >
-    <i class="material-icons">favorite_border</i>
+    <img
+      height="24px"
+      src="/assets/svg/favorite.svg"
+      alt="Favorite"
+    >
   </button>
 </template>
 

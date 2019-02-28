@@ -1,6 +1,7 @@
 <template>
   <div
     class="searchpanel fixed mw-100 bg-cl-primary cl-accent"
+    :class="{ active: isOpen }"
     data-testid="searchPanel"
   >
     <div class="close-icon-row">
@@ -32,28 +33,19 @@
               class="search-panel-input"
               :placeholder="$t('Type what you are looking for...')"
               type="text"
-              autofocus="true"
             >
           </div>
         </div>
       </div>
-      <div v-if="visibleProducts.length && categories.length > 1" class="categories">
-        <category-panel :categories="categories" v-model="selectedCategoryIds"/>
-      </div>
       <div class="product-listing row">
-        <product-tile
-          v-for="product in visibleProducts"
-          :key="product.id"
-          :product="product"
-          @click.native="closeSearchpanel"
-        />
+        <product-tile @click.native="closeSearchpanel" :key="product.id" v-for="product in products" :product="product"/>
         <transition name="fade">
           <div v-if="emptyResults" class="no-results relative center-xs h4 col-md-12">
             {{ $t('No results were found.') }}
           </div>
         </transition>
       </div>
-      <div v-show="OnlineOnly" v-if="visibleProducts.length >= 18" class="buttons-set align-center py35 mt20 px40">
+      <div v-show="OnlineOnly" v-if="products.length >= 18" class="buttons-set align-center py35 mt20 px40">
         <button @click="seeMore" v-if="readMore"
                 class="no-outline brdr-none py15 px20 bg-cl-mine-shaft :bg-cl-th-secondary cl-white fs-medium-small"
                 type="button">
@@ -73,44 +65,18 @@
 import SearchPanel from '@vue-storefront/core/compatibility/components/blocks/SearchPanel/SearchPanel'
 import ProductTile from 'theme/components/core/ProductTile'
 import VueOfflineMixin from 'vue-offline/mixin'
-import CategoryPanel from 'theme/components/core/blocks/Category/CategoryPanel'
 
 export default {
   components: {
-    ProductTile,
-    CategoryPanel
+    ProductTile
   },
   mixins: [SearchPanel, VueOfflineMixin],
-  data () {
-    return {
-      selectedCategoryIds: []
-    }
-  },
-  computed: {
-    visibleProducts () {
-      const productList = this.products || []
-      if (this.selectedCategoryIds.length) {
-        return productList.filter(product => product.category_ids.some(categoryId => {
-          const catId = parseInt(categoryId)
-          return this.selectedCategoryIds.includes(catId)
-        }))
+  mounted () {
+    this.$bus.$on('focusSearchInput', () => {
+      if (!this.$store.state.ui.searchpanel) {
+        this.$refs.search.focus()
       }
-      return productList
-    },
-    categories () {
-      const categoriesMap = {}
-      this.products.forEach(product => {
-        [...product.category].forEach(category => {
-          categoriesMap[category.category_id] = category
-        })
-      })
-      return Object.keys(categoriesMap).map(categoryId => categoriesMap[categoryId])
-    }
-  },
-  watch: {
-    categories () {
-      this.selectedCategoryIds = []
-    }
+    })
   }
 }
 </script>
@@ -126,6 +92,8 @@ export default {
   top: 0;
   right: 0;
   z-index: 3;
+  transform: translateX(100%);
+  transition: transform 300ms $motion-main;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -179,6 +147,10 @@ export default {
       padding-left: map-get($grid-gutter-widths, xs) / 2;
       padding-right: map-get($grid-gutter-widths, xs) / 2;
     }
+  }
+
+  &.active {
+    transform: translateX(0);
   }
 
   .close-icon {

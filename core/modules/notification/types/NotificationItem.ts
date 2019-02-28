@@ -8,6 +8,5 @@ export default interface NotificationItem {
   message: string,
   timeToLive?: number,
   action1: ActionItem,
-  action2?: ActionItem,
-  hasNoTimeout?: boolean
+  action2?: ActionItem
 }

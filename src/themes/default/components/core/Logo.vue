@@ -3,8 +3,8 @@
     <img
       :width="width"
       :height="height"
-      src="/assets/logo.svg"
-      alt="Vuestore logo"
+      src="/assets/logo.png"
+      alt="Klikis logo"
     >
   </router-link>
 </template>

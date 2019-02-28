@@ -1,14 +1,14 @@
 <template>
-  <div @click="switchFilter(id, from, to)">
+  <span @click="switchFilter(id, from, to)" class="price-selector-wrapper">
     <button
-      class="relative brdr-cl-bg-tertiary brdr-1 bg-cl-transparent mr10 pointer price-selector"
+      class="relative brdr-cl-bg-tertiary brdr-1 bg-cl-transparent mr10 pointer price-selector dib"
       :class="{ active: active }"
       :aria-label="$t('Price ') + content"
     >
-      <span class="bg-cl-transparent absolute block square"/>
+      <i class="material-icons">done</i>
     </button>
-    <span>{{ content }}</span>
-  </div>
+    <span class="dib">{{ content }}</span>
+  </span>
 </template>
 
 <script>
@@ -25,28 +25,47 @@ export default {
   $color-event: color(tertiary);
   $color-active: color(accent);
 
-  .price-selector {
-    width: 20px;
-    height: 20px;
+  .price-selector-wrapper {
+    padding: 7px 0;
+  }
 
-    &:hover {
-      .square {
-        background-color: $color-event;
-      }
+  .price-selector {
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border: 1px solid #e5e6eb;
+    border-radius: 5px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+
+    &:hover, &.active {
+        border-color: #009777;
     }
 
     &.active {
-      .square {
-        background-color: $color-active;
+      background: #009777;
+      i {
+          opacity: 1;
       }
     }
-  }
 
-  .square {
-    width: 80%;
-    height: 80%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+    i {
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -ms-transition: all .3s;
+      -o-transition: all .3s;
+      transition: all .3s;
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      bottom: 0;
+      font-size: 20px;
+      color: #ffffff;
+    }
   }
 </style>

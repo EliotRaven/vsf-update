@@ -6,7 +6,7 @@
     >
       <div class="container px15">
         <div class="row between-xs middle-xs" v-if="!isCheckoutPage">
-          <div class="col-md-4 col-xs-2 middle-xs">
+          <div class="col-xs-2 col-md-1 middle-xs">
             <div>
               <template v-if="!canGoBack">
                 <hamburger-icon class="p15 icon bg-cl-secondary pointer" v-if="!canGoBack"/>
@@ -16,28 +16,29 @@
               </template>
             </div>
           </div>
-          <div class="col-xs-2 visible-xs">
+          <div class="col-xs-2 col-sm-1 hidden-lg hidden-xl">
             <search-icon class="p15 icon pointer" />
           </div>
-          <div class="col-md-4 col-xs-4 center-xs pt5">
+          <div class="col-xs-4 col-sm-1 center-xs pt5">
             <div>
               <logo width="auto" height="41px"/>
             </div>
           </div>
-          <div class="col-xs-2 visible-xs">
-            <wishlist-icon class="p15 icon pointer" />
+          <div class="col-xs-5 center-xs pt5 hidden-md hidden-sm hidden-xs">
+            <SearchInHeader/>
           </div>
-          <div class="col-md-4 col-xs-2 end-xs">
-            <div class="inline-flex right-icons">
-              <search-icon class="p15 icon hidden-xs pointer" />
+          <div class="col-xs-12 col-sm-3 col-lg-2 center-xs pt5 first-xs initial-order-sm">
+            <TelBlock/>
+          </div>
+          <div class="col-xs-4  col-sm-2 end-xs">
+            <div class="inline-flex between-xs right-icons">
               <wishlist-icon class="p15 icon hidden-xs pointer" />
-              <compare-icon class="p15 icon hidden-xs pointer" />
               <microcart-icon class="p15 icon pointer" />
-              <account-icon class="p15 icon hidden-xs pointer" />
+              <account-icon class="account-icon p15 icon hidden-xs pointer" />
             </div>
           </div>
         </div>
-        <div class="row between-xs middle-xs px15 py5" v-if="isCheckoutPage">
+        <div class="row between-xs middle-xs px15 pt5" v-if="isCheckoutPage">
           <div class="col-xs-5 col-md-3 middle-xs">
             <div>
               <router-link :to="localizedRoute('/')" class="cl-tertiary links">
@@ -76,7 +77,8 @@ import MicrocartIcon from 'theme/components/core/blocks/Header/MicrocartIcon'
 import ReturnIcon from 'theme/components/core/blocks/Header/ReturnIcon'
 import SearchIcon from 'theme/components/core/blocks/Header/SearchIcon'
 import WishlistIcon from 'theme/components/core/blocks/Header/WishlistIcon'
-
+import SearchInHeader from 'theme/components/core/blocks/SearchPanel/SearchInHeader'
+import TelBlock from 'theme/components/core/blocks/Header/TelBlock'
 export default {
   name: 'Header',
   components: {
@@ -87,7 +89,9 @@ export default {
     MicrocartIcon,
     ReturnIcon,
     SearchIcon,
-    WishlistIcon
+    WishlistIcon,
+    SearchInHeader,
+    TelBlock
   },
   mixins: [CurrentPage],
   data () {
@@ -108,8 +112,7 @@ export default {
   beforeMount () {
     window.addEventListener('scroll', () => {
       this.isScrolling = true
-    }, {passive: true})
-
+    })
     setInterval(() => {
       if (this.isScrolling) {
         this.hasScrolled()
@@ -138,7 +141,6 @@ export default {
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
-
 header {
   height: 54px;
   top: -55px;
@@ -149,7 +151,7 @@ header {
   }
 }
 .icon {
-  opacity: 0.6;
+  opacity: 0.88;
   &:hover,
   &:focus {
     background-color: $color-icon-hover;
@@ -167,9 +169,31 @@ header {
   text-decoration: underline;
 }
 @media (max-width: 767px) {
+  header {
+    height: 90px;
+    top: -91px;
+    .pt5 {
+      padding-top: 0;
+      .TelBlock {
+        height: 30px;
+        background: #e41c3f;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+    }
+    .account-icon {
+      display: none;
+    }
+  }
+  .right-icons {
+    width: 100%;
+  }
+  .header-placeholder {
+    height: 90px;
+  }
   .row.middle-xs {
     margin: 0 -15px;
-
     &.py5 {
       margin: 0;
     }

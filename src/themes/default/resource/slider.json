@@ -1,25 +1,25 @@
 {
   "slides": [
     {
-      "title": "Luma Yoga",
-      "subtitle": "New collection",
-      "button_text": "Shop now",
+      "title": "Oригінальна продукція",
+      "subtitle": "100%",
+      "button_text": "Обирай",
       "image": "/assets/slide_01.jpg",
-      "link": "/c/women-20"
+      "link": "/-5654"
     },
     {
-      "title": "Luma Fitness",
-      "subtitle": "Collection",
-      "button_text": "Shop now",
+      "title": "Безкоштовнии самовивіз із аптеки",
+      "subtitle": "350 аптек поруч",
+      "button_text": "Замовити зараз",
       "image": "/assets/slide_02.jpg",
-      "link": "/c/men-11"
+      "link": "/-5654"
     },
     {
-      "title": "Luma Fitness",
-      "subtitle": "What's new",
-      "button_text": "Shop now",
+      "title": "Широкий асортимент ліків",
+      "subtitle": "Більш 20000 товарів",
+      "button_text": "Обирай",
       "image": "/assets/slide_03.jpg",
-      "link": "/c/training-9"
+      "link": "/-5654"
     }
   ],
   "total": "3"

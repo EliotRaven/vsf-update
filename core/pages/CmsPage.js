@@ -1,6 +1,5 @@
 import { htmlDecode } from '@vue-storefront/core/filters/html-decode'
 import Composite from '@vue-storefront/core/mixins/composite'
-import { Logger } from '@vue-storefront/core/lib/logger'
 
 export default {
   name: 'CmsPage',
@@ -22,7 +21,7 @@ export default {
       }).then(page => {
         resolve(page)
       }).catch(err => {
-        Logger.error(err)()
+        console.error(err)
         reject(err)
       })
     })
@@ -31,7 +30,7 @@ export default {
     validateRoute () {
       this.$store.dispatch('cmsPage/single', { value: this.$route.params.slug, setCurrent: true }).then(cmsPage => {
         if (!cmsPage) {
-          this.$router.push(this.localizedRoute('/'))
+          this.$router.push('/')
         }
       })
     }

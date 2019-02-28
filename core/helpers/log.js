@@ -1,10 +1,8 @@
-import { isServer } from '@vue-storefront/core/helpers'
-
 /**
  * @param {string} level available options: 'no-console', 'only-errors', 'all'
  */
 export function takeOverConsole (level = 'no-console') {
-  const console = !isServer ? window.console : global.console
+  const console = typeof window !== 'undefined' ? window.console : global.console
   if (!console) return
 
   function intercept (method) {

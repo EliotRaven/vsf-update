@@ -1,5 +1,5 @@
-import { mapState, mapGetters } from 'vuex'
-import RootState from '@vue-storefront/core/types/RootState'
+import { mapState } from 'vuex'
+import RootState from '@vue-storefront/store/types/RootState'
 
 export const PersonalDetails = {
   name: 'PersonalDetails',
@@ -27,9 +27,6 @@ export const PersonalDetails = {
   computed: {
     ...mapState({
       currentUser: (state: RootState) => state.user.current
-    }),
-    ...mapGetters({
-      isVirtualCart: 'cart/isVirtualCart'
     })
   },
   methods: {
@@ -37,7 +34,8 @@ export const PersonalDetails = {
       this.personalDetails = {
         firstName: receivedData.firstname,
         lastName: receivedData.lastname,
-        emailAddress: receivedData.email
+        emailAddress: receivedData.email,
+        phoneNumber: receivedData.phoneNumber
       }
     },
     sendDataToCheckout () {

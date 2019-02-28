@@ -15,3 +15,20 @@ $font-families: (
         primary: ("Roboto", #{(map-get($font-fallbacks, 'sans-serif'))}),
         secondary: ("Playfair Display", map-get($font-fallbacks, 'serif'))
 ) !default;
+
+//Client fonts
+@font-face {
+    font-family: OpenSans;
+    font-weight: 400;
+    src: url('/assets/fonts/OpenSans-Regular.ttf');
+}
+@font-face {
+    font-family: OpenSans;
+    font-weight: 700;
+    src: url('/assets/fonts/OpenSans-Bold.ttf');
+}
+@font-face {
+    font-family: GothamPro;
+    font-weight: 700;
+    src: url('/assets/fonts/GothamProBold.ttf')
+}

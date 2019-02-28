@@ -4,7 +4,6 @@
       "port": 3000,
       "protocol": "http",
       "api": "api",
-      "devServiceWorker": false,
       "useOutputCacheTagging": false,
       "useOutputCache": false,
       "outputCacheDefaultTtl": 86400,
@@ -13,15 +12,10 @@
       "dynamicConfigReload": false,
       "dynamicConfigContinueOnError": false,
       "dynamicConfigExclude": ["ssr", "storeViews", "entities", "localForage", "shipping", "boost", "query"],
-      "dynamicConfigInclude": [],
-      "elasticCacheQuota": 4096
+      "dynamicConfigInclude": []
     },
-    "seo": {
-      "useUrlDispatcher": false
-    },    
     "console": {
-      "showErrorOnProduction" : true,
-      "verbosityLevel": "display-everything"
+      "verbosityLevel": "only-errors"
     },
     "redis": {
       "host": "localhost",
@@ -39,35 +33,7 @@
       "min_score": 0.02,
       "csrTimeout": 5000,
       "ssrTimeout": 1000,
-      "queryMethod": "GET",
-      "disableLocalStorageQueriesCache": true,
-      "searchScoring": {
-        "attributes": {
-          "attribute_code": {
-            "scoreValues": { "attribute_value": { "weight": 1 } }
-          }
-        },
-        "fuzziness": 2,
-        "cutoff_frequency":  0.01,
-        "max_expansions": 3,
-        "minimum_should_match": "75%",
-        "prefix_length": 2, 
-        "boost_mode": "multiply",
-        "score_mode": "multiply", 
-        "max_boost": 100,
-        "function_min_score": 1
-      },
-      "searchableAttributes": {
-        "name": {
-          "boost": 4
-        },
-        "sku": {
-          "boost": 2
-        },
-        "category.name": {
-          "boost": 1
-        }
-      }
+      "queryMethod": "POST"
     },
     "ssr": {
       "templates": {
@@ -144,97 +110,37 @@
       "twoStageCaching": true,
       "optimizeShoppingCart": true,
       "category": {
-        "includeFields": [ "id", "*.children_data.id", "*.id", "children_count", "sku", "name", "is_active", "parent_id", "level", "url_key", "product_count", "path"],
-        "excludeFields": [ "sgn" ],
-        "categoriesRootCategorylId": 2,
-        "categoriesDynamicPrefetchLevel": 2,
-        "categoriesDynamicPrefetch": true
+        "includeFields": [ "children_data", "id", "children_count", "sku", "name", "is_active", "parent_id", "level", "url_key", "product_count", "path"]
       },
       "attribute": {
-        "includeFields": [ "attribute_code", "id", "entity_type_id", "options", "default_value", "is_user_defined", "frontend_label", "attribute_id", "default_frontend_label", "is_visible_on_front", "is_visible", "is_comparable", "tier_prices", "frontend_input" ]
+        "includeFields": [ "attribute_code", "id", "entity_type_id", "options", "default_value", "is_user_defined", "frontend_label", "attribute_id", "default_frontend_label", "is_visible_on_front", "is_visible", "is_comparable", "tier_prices" ]
       },
       "productList": {
         "sort": "",
         "includeFields": [ "type_id", "sku", "product_links", "tax_class_id", "special_price", "special_to_date", "special_from_date", "name", "price", "priceInclTax", "originalPriceInclTax", "originalPrice", "specialPriceInclTax", "id", "image", "sale", "new", "url_key", "status", "tier_prices", "configurable_children.sku", "configurable_children.price", "configurable_children.special_price", "configurable_children.priceInclTax", "configurable_children.specialPriceInclTax", "configurable_children.originalPrice", "configurable_children.originalPriceInclTax" ],
-        "excludeFields": [ "description", "configurable_options", "sgn", "*.sgn", "msrp_display_actual_price_type", "*.msrp_display_actual_price_type", "required_options" ]
+        "excludeFields": [ "description", "configurable_options", "sgn" ]
       },
       "productListWithChildren": {
         "includeFields": [ "type_id", "sku", "name", "tax_class_id", "special_price", "special_to_date", "special_from_date", "price", "priceInclTax", "originalPriceInclTax", "originalPrice", "specialPriceInclTax", "id", "image", "sale", "new", "configurable_children.image", "configurable_children.sku", "configurable_children.price", "configurable_children.special_price", "configurable_children.priceInclTax", "configurable_children.specialPriceInclTax", "configurable_children.originalPrice", "configurable_children.originalPriceInclTax", "configurable_children.color", "configurable_children.size", "configurable_children.id", "configurable_children.tier_prices", "product_links", "url_key", "status", "tier_prices"],
-        "excludeFields": [ "description", "sgn", "*.sgn", "msrp_display_actual_price_type", "*.msrp_display_actual_price_type", "required_options"]
+        "excludeFields": [ "description", "sgn"]
       },
       "review": {
         "excludeFields": ["review_entity", "review_status"]
       },
       "product": {
-        "excludeFields": [ "*.msrp_display_actual_price_type", "required_options", "updated_at", "created_at", "attribute_set_id", "options_container", "msrp_display_actual_price_type", "has_options", "stock.manage_stock", "stock.use_config_min_qty", "stock.use_config_notify_stock_qty", "stock.stock_id",  "stock.use_config_backorders", "stock.use_config_enable_qty_inc", "stock.enable_qty_increments", "stock.use_config_manage_stock", "stock.use_config_min_sale_qty", "stock.notify_stock_qty", "stock.use_config_max_sale_qty", "stock.use_config_max_sale_qty", "stock.qty_increments", "small_image", "sgn", "*.sgn"],
-        "includeFields": null,
-        "useDynamicAttributeLoader": true,
-        "standardSystemFields": [
-          "description",
-          "configurable_options",
-          "tsk",
-          "custom_attributes",
-          "size_options",
-          "regular_price",
-          "final_price",
-          "price",
-          "color_options",
-          "id",
-          "links",
-          "gift_message_available",
-          "category_ids",
-          "sku",
-          "stock",
-          "image",
-          "thumbnail",
-          "visibility",
-          "type_id",
-          "tax_class_id",
-          "media_gallery",
-          "url_key",
-          "max_price",
-          "minimal_regular_price",
-          "special_price",
-          "minimal_price",
-          "name",
-          "configurable_children",
-          "max_regular_price",
-          "category",
-          "status",
-          "priceTax",
-          "priceInclTax",
-          "specialPriceTax",
-          "specialPriceInclTax",
-          "_score",
-          "slug",
-          "errors",
-          "info",
-          "erin_recommends",
-          "special_from_date",
-          "news_from_date",
-          "custom_design_from",
-          "originalPrice",
-          "originalPriceInclTax",
-          "parentSku",
-          "options",
-          "product_option",
-          "qty",
-          "is_configured"
-        ]
+        "excludeFields": [ "updated_at", "created_at", "attribute_set_id", "options_container", "msrp_display_actual_price_type", "has_options", "stock.manage_stock", "stock.use_config_min_qty", "stock.use_config_notify_stock_qty", "stock.stock_id",  "stock.use_config_backorders", "stock.use_config_enable_qty_inc", "stock.enable_qty_increments", "stock.use_config_manage_stock", "stock.use_config_min_sale_qty", "stock.notify_stock_qty", "stock.use_config_max_sale_qty", "stock.use_config_max_sale_qty", "stock.qty_increments", "small_image"],
+        "includeFields": null
       }
     },
     "cart": {
       "bypassCartLoaderForAuthorizedUsers": true,
       "multisiteCommonCart": true,
-      "serverMergeByDefault": true,
-      "serverSyncCanRemoveLocalItems": false,
-      "serverSyncCanModifyLocalItems": false,
+      "server_merge_by_default": true,
       "synchronize": true,
       "synchronize_totals": true,
       "setCustomProductOptions": true,
       "setConfigurableProductOptions": true,
       "askBeforeRemoveProduct": true,
-      "displayItemDiscounts": true,
       "create_endpoint": "http://localhost:8080/api/cart/create?token={{token}}",
       "updateitem_endpoint": "http://localhost:8080/api/cart/update?token={{token}}&cartId={{cartId}}",
       "deleteitem_endpoint": "http://localhost:8080/api/cart/delete?token={{token}}&cartId={{cartId}}",
@@ -249,25 +155,30 @@
     },
     "products": {
       "useShortCatalogUrls": false,
-      "useMagentoUrlKeys": true,
+      "useMagentoUrlKeys": false,
       "setFirstVarianAsDefaultInURL": false,
       "configurableChildrenStockPrefetchStatic": false,
       "configurableChildrenStockPrefetchDynamic": false,
       "configurableChildrenStockPrefetchStaticPrefetchCount": 8,
       "filterUnavailableVariants": false,
-      "listOutOfStockProducts": true,
+      "listOutOfStockProducts": false,
       "preventConfigurableChildrenDirectAccess": true,
       "alwaysSyncPlatformPricesOver": false,
       "clearPricesBeforePlatformSync": false,
       "waitForPlatformSync": false,
       "setupVariantByAttributeCode": true,
       "endpoint": "http://localhost:8080/api/product",
-      "defaultFilters": ["color", "size", "price", "erin_recommends"],
+      "defaultFilters": [
+        "brand",
+        "recipe_require",
+        "substance",
+        "color",
+        "size",
+        "price",
+        "erin_recommends"
+      ],
       "filterFieldMapping": {
         "category.name": "category.name.keyword"
-      },
-      "colorMappings": {
-        "Melange graphite": "#eeeeee"
       },
       "sortByAttributes": {
         "Latest": "updated_at",
@@ -305,18 +216,18 @@
     "localForage": {
       "defaultDrivers": {
         "user": "LOCALSTORAGE",
-        "cmspage": "LOCALSTORAGE",
-        "cmsblock": "LOCALSTORAGE",
+        "cmspage": "INDEXEDDB",
+        "cmsblock": "INDEXEDDB",
         "carts": "LOCALSTORAGE",
         "orders": "LOCALSTORAGE",
-        "wishlist": "LOCALSTORAGE",
-        "categories": "LOCALSTORAGE",
+        "wishlist": "INDEXEDDB",
+        "categories": "INDEXEDDB",
         "attributes": "LOCALSTORAGE",
         "products": "INDEXEDDB",
-        "elasticCache": "LOCALSTORAGE",
+        "elasticCache": "INDEXEDDB",
         "claims": "LOCALSTORAGE",
         "syncTasks": "LOCALSTORAGE",
-        "ordersHistory": "LOCALSTORAGE",
+        "ordersHistory": "INDEXEDDB",
         "checkoutFieldValues": "LOCALSTORAGE"
       }
     },
@@ -358,27 +269,27 @@
     "shipping": {
       "methods": [
         {
-          "method_title": "DPD Courier",
+          "method_title": "Free Shipping",
           "method_code": "flatrate",
           "carrier_code": "flatrate",
-          "amount": 4,
-          "price_incl_tax": 5,
+          "amount": 0,
+          "price_incl_tax": 0,
           "default": true,
           "offline": true
         }
       ]
     },
     "i18n": {
-      "defaultCountry": "US",
-      "defaultLanguage": "EN",
-      "availableLocale": ["en-US","de-DE","fr-FR","es-ES","nl-NL", "jp-JP", "ru-RU", "it-IT", "pt-BR", "pl-PL", "cs-CZ"],
-      "defaultLocale": "en-US",
-      "currencyCode": "USD",
-      "currencySign": "$",
-      "currencySignPlacement": "preppend",
+      "defaultCountry": "UA",
+      "defaultLanguage": "UA",
+      "availableLocale": ["ua-UA","en-US","de-DE","fr-FR","es-ES","nl-NL", "jp-JP", "ru-RU", "it-IT", "pt-BR", "pl-PL", "cs-CZ"],
+      "defaultLocale": "ua-UA",
+      "currencyCode": "UAH",
+      "currencySign": "Грн",
+      "currencySignPlacement": "append",
       "dateFormat": "HH:mm D/M/YYYY",
-      "fullCountryName": "United States",
-      "fullLanguageName": "English",
+      "fullCountryName": "Ukraine",
+      "fullLanguageName": "Ukraine",
       "bundleAllStoreviewLanguages": true
     },
     "mailchimp": {
@@ -396,9 +307,6 @@
     "analytics": {
       "id": false
     },
-    "hotjar": {
-      "id": false
-    },
     "cms": {
       "endpoint": "http://localhost:8080/api/ext/cms-data/cms{{type}}/{{cmsId}}",
       "endpointIdentifier": "http://localhost:8080/api/ext/cms-data/cms{{type}}Identifier/{{cmsIdentifier}}/storeId/{{storeId}}"
@@ -410,7 +318,14 @@
       "max_count": 500
     },
     "usePriceTiers": false,
-    "useZeroPriceProduct": true,
+    "boost": {
+      "name": 3,
+      "category.name": 1,
+      "short_description": 1,
+      "description": 1,
+      "sku": 1,
+      "configurable_children.sku": 1
+    },
     "query": {
       "inspirations": {
         "filter": [
@@ -447,8 +362,7 @@
     },
     "availabilitySheet": {
       "token": "Bearer 7y4k94746yla7gbgbdo5ol8j3q1i5tj7",
-      "endpoint": "http://35.204.112.182/rest/V1/inventory/source-selection-algorithm-result"
+      "endpoint": "https://vuedemo.klikis.com/rest/V1/inventory/source-selection-algorithm-result"
     }
 
 }
-

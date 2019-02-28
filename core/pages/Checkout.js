@@ -2,12 +2,9 @@ import Vue from 'vue'
 import i18n from '@vue-storefront/i18n'
 import store from '@vue-storefront/store'
 import VueOfflineMixin from 'vue-offline/mixin'
-import { mapGetters } from 'vuex'
 
 import Composite from '@vue-storefront/core/mixins/composite'
-import { currentStoreView } from '@vue-storefront/core/lib/multistore'
-import { isServer } from '@vue-storefront/core/helpers'
-import { Logger } from '@vue-storefront/core/lib/logger'
+import { currentStoreView } from '@vue-storefront/store/lib/multistore'
 
 export default {
   name: 'Checkout',
@@ -40,11 +37,6 @@ export default {
       focusedField: null
     }
   },
-  computed: {
-    ...mapGetters({
-      isVirtualCart: 'cart/isVirtualCart'
-    })
-  },
   beforeMount () {
     // TO-DO: Use one event with name as apram
     this.$bus.$on('cart-after-update', this.onCartAfterUpdate)
@@ -63,7 +55,7 @@ export default {
     this.$store.dispatch('cart/load').then(() => {
       if (this.$store.state.cart.cartItems.length === 0) {
         this.notifyEmptyCart()
-        this.$router.push(this.localizedRoute('/'))
+        this.$router.push('/')
       } else {
         this.stockCheckCompleted = false
         const checkPromises = []
@@ -72,7 +64,7 @@ export default {
             checkPromises.push(new Promise((resolve, reject) => {
               Vue.prototype.$db.syncTaskCollection.getItem(product.onlineStockCheckid, (err, item) => {
                 if (err || !item) {
-                  if (err) Logger.error(err)()
+                  if (err) console.error(err)
                   resolve(null)
                 } else {
                   product.stock = item.result
@@ -126,7 +118,7 @@ export default {
     onCartAfterUpdate (payload) {
       if (this.$store.state.cart.cartItems.length === 0) {
         this.notifyEmptyCart()
-        this.$router.push(this.localizedRoute('/'))
+        this.$router.push('/')
       }
     },
     onAfterShippingMethodChanged (payload) {
@@ -145,7 +137,7 @@ export default {
       this.confirmation = payload.confirmation
       this.orderPlaced = true
       this.$store.dispatch('checkout/setThankYouPage', true)
-      Logger.debug(payload.order)()
+      console.debug(payload.order)
     },
     onBeforeEdit (section) {
       this.activateSection(section)
@@ -161,14 +153,25 @@ export default {
     onDoPlaceOrder (additionalPayload) {
       if (this.$store.state.cart.cartItems.length === 0) {
         this.notifyEmptyCart()
-        this.$router.push(this.localizedRoute('/'))
+        this.$router.push('/')
       } else {
         this.payment.paymentMethodAdditional = additionalPayload
         this.placeOrder()
       }
     },
     onAfterPaymentDetails (receivedData, validationResult) {
-      this.payment = receivedData
+      const payment = {
+        country: this.shipping.country,
+        zipCode: this.shipping.zipCode,
+        city: this.shipping.city,
+        streetAddress: this.shipping.streetAddress,
+        apartmentNumber: this.shipping.apartmentNumber,
+        phoneNumber: this.personalDetails.phoneNumber,
+        firstName: this.personalDetails.firstName,
+        lastName: this.personalDetails.lastName,
+        paymentMethod: 'cashondelivery'
+      }
+      this.payment = payment
       this.validationResults.payment = validationResult
       this.activateSection('orderReview')
       this.savePaymentDetails()
@@ -176,21 +179,17 @@ export default {
     onAfterShippingDetails (receivedData, validationResult) {
       this.shipping = receivedData
       this.validationResults.shipping = validationResult
-      this.activateSection('payment')
+      this.activateSection('orderReview')
       this.saveShippingDetails()
 
       const storeView = currentStoreView()
+      this.$bus.$emit('checkout-after-paymentDetails', this.payment, this.$v)
       storeView.tax.defaultCountry = this.shipping.country
     },
     onAfterPersonalDetails (receivedData, validationResult) {
       this.personalDetails = receivedData
       this.validationResults.personalDetails = validationResult
-
-      if (this.isVirtualCart === true) {
-        this.activateSection('payment')
-      } else {
-        this.activateSection('shipping')
-      }
+      this.activateSection('shipping')
       this.savePersonalDetails()
       this.focusedField = null
     },
@@ -220,18 +219,18 @@ export default {
       if (typeof navigator !== 'undefined' && navigator.onLine) {
         if (this.stockCheckCompleted) {
           if (!this.stockCheckOK) {
-            isValid = false
-            this.notifyNotAvailable()
+            isValid = true
+            // this.notifyNotAvailable()
           }
         } else {
-          this.notifyStockCheck()
-          isValid = false
+          // this.notifyStockCheck()
+          isValid = true
         }
       }
       return isValid
     },
     activateHashSection () {
-      if (!isServer) {
+      if (typeof window !== 'undefined') {
         var urlStep = window.location.hash.replace('#', '')
         if (this.activeSection.hasOwnProperty(urlStep) && this.activeSection[urlStep] === false) {
           this.activateSection(urlStep)
@@ -250,7 +249,7 @@ export default {
         this.activeSection[section] = false
       }
       this.activeSection[sectionToActivate] = true
-      if (!isServer) window.location.href = window.location.origin + window.location.pathname + '#' + sectionToActivate
+      if (typeof window !== 'undefined') window.location.href = window.location.origin + window.location.pathname + '#' + sectionToActivate
     },
     // This method checks if there exists a mapping of chosen payment method to one of Magento's payment methods.
     getPaymentMethod () {
@@ -266,6 +265,20 @@ export default {
         cart_id: this.$store.state.cart.cartServerToken ? this.$store.state.cart.cartServerToken : '',
         products: this.$store.state.cart.cartItems,
         addressInformation: {
+          shippingAddress: {
+            region: this.shipping.state,
+            region_id: this.shipping.region_id ? this.shipping.region_id : 0,
+            country_id: this.shipping.country,
+            street: [this.shipping.streetAddress, this.shipping.apartmentNumber],
+            company: this.shipping.company, // TODO: Fix me! https://github.com/DivanteLtd/vue-storefront/issues/224
+            telephone: this.shipping.phoneNumber,
+            postcode: this.shipping.zipCode,
+            city: this.shipping.city,
+            firstname: this.shipping.firstName,
+            lastname: this.shipping.lastName,
+            email: this.personalDetails.emailAddress,
+            region_code: this.shipping.region_code ? this.shipping.region_code : ''
+          },
           billingAddress: {
             region: this.payment.state,
             region_id: this.payment.region_id ? this.payment.region_id : 0,
@@ -288,22 +301,6 @@ export default {
           shippingExtraFields: this.shipping.extraFields
         }
       }
-      if (!this.isVirtualCart) {
-        this.order.addressInformation.shippingAddress = {
-          region: this.shipping.state,
-          region_id: this.shipping.region_id ? this.shipping.region_id : 0,
-          country_id: this.shipping.country,
-          street: [this.shipping.streetAddress, this.shipping.apartmentNumber],
-          company: 'NA', // TODO: Fix me! https://github.com/DivanteLtd/vue-storefront/issues/224
-          telephone: this.shipping.phoneNumber,
-          postcode: this.shipping.zipCode,
-          city: this.shipping.city,
-          firstname: this.shipping.firstName,
-          lastname: this.shipping.lastName,
-          email: this.personalDetails.emailAddress,
-          region_code: this.shipping.region_code ? this.shipping.region_code : ''
-        }
-      }
       return this.order
     },
     placeOrder () {
@@ -311,7 +308,7 @@ export default {
       if (this.checkStocks()) {
         this.$store.dispatch('checkout/placeOrder', { order: this.prepareOrder() })
       } else {
-        this.notifyNotAvailable()
+        this.$store.dispatch('checkout/placeOrder', { order: this.prepareOrder() })
       }
     },
     savePersonalDetails () {

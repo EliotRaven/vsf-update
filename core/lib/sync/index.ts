@@ -5,7 +5,7 @@ import { Logger } from '@vue-storefront/core/lib/logger'
 import { execute as taskExecute, _prepareTask } from './task'
 import * as localForage from 'localforage'
 import UniversalStorage from '@vue-storefront/store/lib/storage'
-import { currentStoreView } from '../multistore'
+import { currentStoreView } from '@vue-storefront/store/lib/multistore'
 
 /** Syncs given task. If user is offline requiest will be sent to the server after restored connection */
 function queue (task) {
@@ -14,11 +14,11 @@ function queue (task) {
   Logger.info('Sync task queued ' + task.url, 'sync', { task })()
   return new Promise((resolve, reject) => {
     tasksCollection.setItem(task.task_id.toString(), task, (err, resp) => {
-      if (err) Logger.error(err, 'sync')()
+      if (err) console.error(err)
       Vue.prototype.$bus.$emit('sync/PROCESS_QUEUE', { config: rootStore.state.config }) // process checkout queue
       resolve(task)
     }).catch((reason) => {
-      Logger.error(reason, 'sync')() // it doesn't work on SSR
+      console.error(reason) // it doesn't work on SSR
       reject(reason)
     })
   })
@@ -50,11 +50,11 @@ function execute (task) { // not offline task
     } else {
       usersCollection.getItem('current-token', (err, currentToken) => { // TODO: if current token is null we should postpone the queue and force re-login - only if the task requires LOGIN!
         if (err) {
-          Logger.error(err, 'sync')()
+          console.error(err)
         }
         cartsCollection.getItem('current-cart-token', (err, currentCartId) => {
           if (err) {
-            Logger.error(err, 'sync')()
+            console.error(err)
           }
           if (!currentCartId && rootStore.state.cart.cartServerToken) { // this is workaround; sometimes after page is loaded indexedb returns null despite the cart token is properly set
             currentCartId = rootStore.state.cart.cartServerToken

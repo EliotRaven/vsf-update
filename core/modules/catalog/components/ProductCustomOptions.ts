@@ -2,7 +2,6 @@ import { mapMutations } from 'vuex'
 import * as types from '../store/product/mutation-types'
 import rootStore from '@vue-storefront/store'
 import i18n from '@vue-storefront/i18n'
-import { Logger } from '@vue-storefront/core/lib/logger'
 
 function _defaultOptionValue (co) {
   switch (co.type) {
@@ -83,7 +82,7 @@ export const ProductCustomOptions = {
             this.product.errors['custom_options_' + fieldName] = null
           }
         } else {
-          Logger.error('No validation rule found for ' + validationRule, 'components-product-custom-options')()
+          console.error('No validation rule found for ', validationRule)
           this.validation.results[fieldName] = { error: false, message: '' }
         }
       } else {

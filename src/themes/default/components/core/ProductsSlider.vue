@@ -1,30 +1,37 @@
 <template>
   <div class="collection">
-    <div class="container">
+    <div class="container brt">
       <div class="row center-xs">
         <header class="col-md-12">
-          <h2 class="align-center cl-accent">
+          <h2 class="align-left cl-accent">
             {{ title }}
           </h2>
         </header>
       </div>
     </div>
-    <div class="bg-cl-secondary collection-slider">
+    <div class="collection-slider">
       <div class="container px15">
         <div class="row">
           <div class="col-md-12">
-            <div class="center-xs cool-stuff-collection">
+            <div class="cool-stuff-collection">
               <no-ssr>
-                <carousel v-bind="config" @pageChange="setMuted">
+                <carousel
+                  v-bind="config"
+                  @pageChange="setMuted"
+                  pagination-enabled="true"
+                  navigation-enabled="true"
+                  navigation-prev-label="<"
+                  navigation-next-label=">"
+                >
                   <slide
                     v-for="product in products"
                     :key="product.id"
                   >
-                    <product-tile
+                    <product-tile-slider
                       class="collection-product"
                       :product="product"
-                      :labels-active="false"
-                      :only-image="true"
+                      :labels-active="true"
+                      :only-image="false"
                     />
                   </slide>
                 </carousel>
@@ -33,13 +40,22 @@
           </div>
         </div>
       </div>
+      <div class="align-center container py50">
+        <button
+          class="py15 px40 h5 slider-btn"
+        >
+          {{ $t('Go to the directory') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import NoSSR from 'vue-no-ssr'
-import ProductTile from 'theme/components/core/ProductTile'
+import { Carousel, Slide } from 'vue-carousel'
+
+import ProductTileSlider from 'theme/components/core/ProductTileSlider'
 
 export default {
   name: 'ProductsSlider',
@@ -58,9 +74,9 @@ export default {
     }
   },
   components: {
-    'Carousel': () => import('vue-carousel').then(Slider => Slider.Carousel),
-    'Slide': () => import('vue-carousel').then(Slider => Slider.Slide),
-    ProductTile,
+    Slide,
+    Carousel,
+    ProductTileSlider,
     'no-ssr': NoSSR
   },
   data () {
@@ -84,7 +100,6 @@ $color-product-bg: color(secondary, $colors-background);
 .collection-slider {
   overflow: hidden;
   .VueCarousel-wrapper {
-    overflow: visible!important;
     &:before,
     &:after {
       content: "";
@@ -118,31 +133,56 @@ $color-product-bg: color(secondary, $colors-background);
       left: 100%;
       background: linear-gradient(to left, $color-product-bg 0%,$color-product-bg 40%,rgba($color-product-bg,0.2) 100%);
     }
-  }
-}
-
-.product {
-  &.collection-product {
-    padding: 0;
-  }
-}
-
-.collection-product {
-  .product-link {
-    display: block;
-    padding: 0 15px;
-  }
-
-  .product-image {
-    height: auto;
-    will-change: opacity;
-
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      height: auto;
-      vertical-align: bottom;
+    .VueCarousel-inner{
+      padding: 0 10px;
+      transition: transform 1s ease 0.1s!important;
+      .VueCarousel-slide {
+        margin: 0 9px;
+        flex-basis: 265px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        .product {
+          .product-link {
+            display: block;
+            padding: 0 15px 15px 15px;
+            .product-image {
+              height: auto;
+              img {
+                max-width: 100%;
+                max-height: 100%;
+                height: auto;
+                vertical-align: bottom;
+              }
+            }
+          }
+        }
+      }
     }
   }
+  .VueCarousel-navigation {
+    .VueCarousel-navigation-button.VueCarousel-navigation-next,
+    .VueCarousel-navigation-button.VueCarousel-navigation-prev {
+      padding: 13px 17px!important;
+      font-weight: 400;
+      border-radius: 5px;
+      background: #d83b4b;
+      color: white;
+      font-size: 20px;
+    }
+  }
+}
+.slider-btn {
+  background: transparent;
+  border: 1px solid #d83b4b;
+  border-radius: 5px;
+  color: #d83b4b;
+  transition: all 0.3s;
+  &:hover {
+    background: #d83b4b;
+    color: #fff;
+  }
+}
+.brt {
+  border-top: 1px solid lightgray;
 }
 </style>

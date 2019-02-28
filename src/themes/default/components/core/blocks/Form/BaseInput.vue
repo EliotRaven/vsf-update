@@ -69,7 +69,7 @@ export default {
     },
     value: {
       type: [String, Number],
-      default: ''
+      required: true
     },
     name: {
       type: String,

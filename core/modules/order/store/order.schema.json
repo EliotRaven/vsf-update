@@ -1,4 +1,3 @@
-// DEPRECATED -> Moved to Order.ts
 {
     "additionalProperties": false,
     "required": [ "products", "addressInformation" ],
@@ -39,7 +38,7 @@
                     "properties": {
                         "region": { "type": "string" },
                         "region_id": { "type": "number" },
-                        "country_id": { "type": "string", "pattern": "[a-zA-Z]" },
+                        "country_id": { "type": "string" },
                         "street": {
                             "description": "Street name",
                             "minItems": 1,
@@ -47,10 +46,10 @@
                         },
                         "company": { "type": "string" },
                         "telephone": { "type": "string" },
-                        "postcode": { "type": "string", "minLength": 3,  "pattern": "[a-zA-Z0-9_]+" },
-                        "city": { "type": "string", "pattern": "[a-zA-Z]+" },
-                        "firstname": { "type": "string", "pattern": "[a-zA-Z]+", "description": "First name" },
-                        "lastname": { "type": "string", "pattern": "[a-zA-Z]+" },
+                        "postcode": { "type": "string", "minLength": 3 },
+                        "city": { "type": "string" },
+                        "firstname": { "type": "string", "description": "First name" },
+                        "lastname": { "type": "string" },
                         "email": { "type": "string", "pattern": "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" },
                         "region_code":{ "type": "string" },
                         "sameAsBilling": { "type": "number"}
@@ -62,17 +61,17 @@
                         "properties": {
                             "region": { "type": "string" },
                             "region_id": { "type": "number" },
-                            "country_id": { "type": "string", "pattern": "[a-zA-Z]" },
+                            "country_id": { "type": "string" },
                             "street": {
                                 "minItems": 1,
                                 "items": { "minLength": 1}
                             },
                             "company": { "type": "string" },
                             "telephone": { "type": "string" },
-                            "postcode": { "type": "string", "minLength": 3,  "pattern": "[a-zA-Z0-9_]+" },
-                            "city": { "type": "string", "pattern": "[a-zA-Z]+" },
-                            "firstname": { "type": "string", "pattern": "[a-zA-Z]+" },
-                            "lastname": { "type": "string", "pattern": "[a-zA-Z]+" },
+                            "postcode": { "type": "string", "minLength": 3 },
+                            "city": { "type": "string" },
+                            "firstname": { "type": "string" },
+                            "lastname": { "type": "string" },
                             "email": { "type": "string", "pattern": "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" },
                             "region_code":{ "type": "string" },
                             "sameAsBilling": { "type": "number"}

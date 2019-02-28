@@ -1,62 +1,99 @@
 <template>
-  <div class="newsletter py25 px15 bg-cl-secondary">
+  <div class="newsletter py25 px15">
     <div class="container">
-      <div class="newsletter-content m0 row middle-sm start-md">
-        <div class="col-md-9 col-xs-12">
-          <h3 class="h3 cl-accent weight-400 m0">
-            {{ $t('Subscribe to the newsletter and receive a coupon for 10% off') }}
-          </h3>
+      <div class="newsletter-content m0 row middle-sm between-xs">
+        <div class="col-lg-6 col-xs-12">
+          <h4>
+            {{ $t('Learn about new promotions first') }}
+          </h4>
         </div>
-        <div class="newsletter-button col-md-3 col-xs-12 end-md">
-          <button-outline
-            @click.native="showNewsletterPopup"
-            color="dark"
-            data-testid="openNewsletterButton"
-          >
-            {{ $t('Subscribe') }}
-          </button-outline>
+        <div class="newsletter-button col-lg-5 col-xs-12 end-md">
+          <form class="row" @submit.prevent="submit(onSuccesfulSubmission)" novalidate>
+            <div class="col-xs-8">
+              <subscribe-input
+                focus
+                type="email"
+                name="email"
+                v-model="email"
+                autocomplete="email"
+                :placeholder="$t('E-mail address *')"
+                :validations="[
+                  {
+                    condition: $v.email.$error && !$v.email.required,
+                    text: $t('Field is required.')
+                  },
+                  {
+                    condition: !$v.email.email && $v.email.$error,
+                    text: $t('Please provide valid e-mail address.')
+                  }
+                ]"
+              />
+            </div>
+            <subscribe-button
+              class="col-xs-4"
+              type="submit"
+              :disabled="this.$v.$invalid"
+              @click.native="$v.email.$touch"
+            >
+              {{ $t('Subscribe') }}
+            </subscribe-button>
+          </form>
         </div>
       </div>
     </div>
-    <newsletter-popup v-if="loadNewsletterPopup"/>
   </div>
 </template>
 
 <script>
-import ButtonOutline from 'theme/components/theme/ButtonOutline'
-import { mapState } from 'vuex'
-const NewsletterPopup = () => import(/* webpackChunkName: "vsf-newsletter-modal" */ 'theme/components/core/NewsletterPopup.vue')
+import { Subscribe } from 'src/modules/mailchimp/components/Subscribe'
+import i18n from '@vue-storefront/i18n'
+
+import Modal from 'theme/components/core/Modal'
+import SubscribeButton from 'theme/components/core/blocks/Footer/SubscribeButton.vue'
+import SubscribeInput from 'theme/components/core/blocks/Form/SubscribeInput.vue'
 
 export default {
   name: 'Newsletter',
-  data () {
-    return {
-      loadNewsletterPopup: false
-    }
-  },
-  computed: {
-    ...mapState({
-      isOpen: state => state.ui.newsletterPopup,
-      isSubscribed: state => state.mailchimp.isSubscribed
-    })
+  beforeDestroy () {
+    this.$off('validation-error')
   },
   methods: {
-    newsletterClick () {
-      this.$store.commit('ui/setNewsletterPopup', !this.isOpen)
-    },
-    showNewsletterPopup () {
-      this.loadNewsletterPopup = true
-      this.$bus.$emit('modal-show', 'modal-newsletter')
+    onSuccesfulSubmission () {
+      this.$store.dispatch('notification/spawnNotification', {
+        type: 'success',
+        message: i18n.t('You have been successfully subscribed to our newsletter!'),
+        action1: { label: i18n.t('OK') }
+      })
+      this.$bus.$emit('modal-hide', 'modal-newsletter')
     }
   },
   components: {
-    ButtonOutline,
-    NewsletterPopup
-  }
+    Modal,
+    SubscribeButton,
+    SubscribeInput
+  },
+  mixins: [
+    Subscribe
+  ]
 }
 </script>
 
 <style scoped>
+  .newsletter {
+    background: #d83b4b;
+    color: white;
+    font-size: 16px;
+  }
+  h4 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+  }
+  form {
+    background: white;
+    border-radius: 5px;
+    align-items: center;
+  }
   @media (max-width: 1023px) {
     .newsletter-button {
       padding-top: 25px;
@@ -65,7 +102,7 @@ export default {
   }
 
   @media (max-width: 767px) {
-    .h3 {
+    .h4 {
       font-size: 18px;
       text-align: center;
     }

@@ -29,8 +29,8 @@
   </div>
 </template>
 <script>
+import { Carousel, Slide } from 'vue-carousel'
 import NoSSR from 'vue-no-ssr'
-
 export default {
   props: {
     current: {
@@ -50,8 +50,8 @@ export default {
   },
   components: {
     'no-ssr': NoSSR,
-    'Carousel': () => import('vue-carousel').then(Slider => Slider.Carousel),
-    'Slide': () => import('vue-carousel').then(Slider => Slider.Slide)
+    Carousel,
+    Slide
   },
   mounted () {
     this.$store.commit('ui/setOverlay', true)
@@ -92,7 +92,7 @@ $z-index-gallery: map-get($z-index, overlay) + 1;
     padding: 20px;
     height: 750px;
     max-height: 100%;
-    justify-content: space-evenly;
+    max-width: 750px;
 
     @media (max-width: 767px) {
       top: 50%;
@@ -142,7 +142,6 @@ $z-index-gallery: map-get($z-index, overlay) + 1;
   }
 
   &__gallery {
-    max-width: 600px;
     height: 100%;
     flex: 1;
 

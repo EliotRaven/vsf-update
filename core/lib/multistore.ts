@@ -1,6 +1,6 @@
 import rootStore from '../store'
 import { loadLanguageAsync } from '@vue-storefront/i18n'
-import { initializeSyncTaskStorage } from './sync/task'
+// import { initializeSyncTaskStorage } from './sync/task'
 import Vue from 'vue'
 import { Route } from 'vue-router'
 
@@ -63,7 +63,7 @@ export function prepareStoreView (storeCode: string) : StoreView {
     if (typeof Vue.prototype.$db === 'undefined') {
       Vue.prototype.$db = {}
     }
-    initializeSyncTaskStorage()
+    // initializeSyncTaskStorage()
     Vue.prototype.$db.currentStoreCode = storeView.storeCode
   }
   return storeView

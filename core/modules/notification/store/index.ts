@@ -26,11 +26,9 @@ export const module: Module<NotificationState, any> = {
         return
       }
       commit('add', notification)
-      if (!notification.hasNoTimeout) {
-        setTimeout(() => {
-          dispatch('removeNotification')
-        }, notification.timeToLive || 5000)
-      }
+      setTimeout(() => {
+        dispatch('removeNotification')
+      }, notification.timeToLive || 5000)
     },
     removeNotification ({ commit, state }, index?: number) {
       if (!index) {

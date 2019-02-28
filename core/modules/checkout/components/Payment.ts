@@ -1,7 +1,6 @@
 import { mapState, mapGetters } from 'vuex'
-import RootState from '@vue-storefront/core/types/RootState'
+import RootState from '@vue-storefront/store/types/RootState'
 const Countries = require('@vue-storefront/i18n/resource/countries.json')
-import toString from 'lodash-es/toString'
 
 export const Payment = {
   name: 'Payment',
@@ -26,13 +25,12 @@ export const Payment = {
       currentUser: (state: RootState) => state.user.current
     }),
     ...mapGetters({
-      paymentMethods: 'payment/paymentMethods',
-      isVirtualCart: 'cart/isVirtualCart'
+      paymentMethods: 'payment/paymentMethods'
     })
   },
   created () {
     if (!this.payment.paymentMethod || this.notInMethods(this.payment.paymentMethod)) {
-      this.payment.paymentMethod = this.paymentMethods.length > 0 ? this.paymentMethods[0].code : 'cashondelivery'
+      this.payment.paymentMethod = this.paymentMethods[0].code
     }
   },
   mounted () {
@@ -71,7 +69,7 @@ export const Payment = {
           let id = this.currentUser.default_billing
           let addresses = this.currentUser.addresses
           for (let i = 0; i < addresses.length; i++) {
-            if (toString(addresses[i].id) === toString(id)) {
+            if (addresses[i].id === Number(id)) {
               this.payment = {
                 firstName: addresses[i].firstname,
                 lastName: addresses[i].lastname,
@@ -107,7 +105,7 @@ export const Payment = {
           zipCode: '',
           phoneNumber: '',
           taxId: '',
-          paymentMethod: this.paymentMethods.length > 0 ? this.paymentMethods[0].code : ''
+          paymentMethod: this.paymentMethods[0].code
         }
       }
     },
@@ -125,7 +123,7 @@ export const Payment = {
           apartmentNumber: shippingDetails.apartmentNumber,
           zipCode: shippingDetails.zipCode,
           phoneNumber: shippingDetails.phoneNumber,
-          paymentMethod: this.paymentMethods.length > 0 ? this.paymentMethods[0].code : ''
+          paymentMethod: this.paymentMethods[0].code
         }
         this.sendToBillingAddress = false
         this.generateInvoice = false
@@ -140,7 +138,7 @@ export const Payment = {
         let id = this.currentUser.default_billing
         let addresses = this.currentUser.addresses
         for (let i = 0; i < addresses.length; i++) {
-          if (toString(addresses[i].id) === toString(id)) {
+          if (addresses[i].id === Number(id)) {
             this.payment = {
               firstName: addresses[i].firstname,
               lastName: addresses[i].lastname,
@@ -153,7 +151,7 @@ export const Payment = {
               zipCode: addresses[i].postcode,
               taxId: addresses[i].vat_id,
               phoneNumber: addresses[i].telephone,
-              paymentMethod: this.paymentMethods.length > 0 ? this.paymentMethods[0].code : ''
+              paymentMethod: this.paymentMethods[0].code
             }
             this.generateInvoice = true
           }

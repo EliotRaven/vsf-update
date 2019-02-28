@@ -1,22 +1,22 @@
+import { getMutationData } from '@vue-storefront/store'
 import * as pageTypes from './page/mutation-types'
 import * as blockTypes from './block/mutation-types'
 import { cmsPagesStorageKey } from './page'
 import { cmsBlockStorageKey } from './block'
 import { cacheStorage  } from '../'
-import { Logger } from '@vue-storefront/core/lib/logger'
 
 export function plugin (mutation, state) {
-  const type = mutation.type
+  let { storeName, actionName } = getMutationData(mutation.type)
 
-  if (type.startsWith(pageTypes.SN_CMS_PAGE)) { // check if this mutation is pages related
+  if (storeName === pageTypes.SN_CMS_PAGE) { // check if this mutation is pages related
     cacheStorage.setItem(cmsPagesStorageKey, state.cmsPage.items).catch((reason) => {
-      Logger.error(reason, 'cms') // it doesn't work on SSR
+      console.error(reason) // it doesn't work on SSR
     })
   }
 
-  if (type.startsWith(blockTypes.SN_CMS_BLOCK)) { // check if this mutation is block related
+  if (storeName === blockTypes.SN_CMS_BLOCK) { // check if this mutation is block related
     cacheStorage.setItem(cmsBlockStorageKey, state.cmsBlock.items).catch((reason) => {
-      Logger.error(reason, 'cms') // it doesn't work on SSR
+      console.error(reason) // it doesn't work on SSR
     })
   }
 }

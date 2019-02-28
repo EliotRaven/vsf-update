@@ -1,6 +1,6 @@
 export default interface Product {
   category: Array<Object>
-  category_ids: Array<string>
+  categroy_ids: Array<string>
   climate: string
   color: string
   color_options: Array<number>

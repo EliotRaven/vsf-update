@@ -68,7 +68,7 @@ const store = {
       commit('setMicrocart', !state.microcart)
     },
     toggleWishlist ({ commit, state }) {
-      commit('setWishlist', !state.wishlist)
+      commit('setWishlist', !state.microcart)
     }
   }
 }

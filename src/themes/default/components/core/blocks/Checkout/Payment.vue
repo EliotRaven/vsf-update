@@ -6,7 +6,7 @@
           class="number-circle lh35 cl-white brdr-circle align-center weight-700"
           :class="{ 'bg-cl-th-accent' : isActive || isFilled, 'bg-cl-tertiary' : !isFilled && !isActive }"
         >
-          {{ (isVirtualCart ? 2 : 3) }}
+          3
         </div>
       </div>
       <div class="col-xs-11 col-sm-9 col-md-11">
@@ -38,7 +38,6 @@
             id="sendToShippingAddressCheckbox"
             v-model="sendToShippingAddress"
             @click="useShippingAddress"
-            v-if="!isVirtualCart"
           >
             {{ $t('Copy address data from shipping') }}
           </base-checkbox>
@@ -68,7 +67,7 @@
               },
               {
                 condition: !$v.payment.firstName.minLength,
-                text: $t('Name must have at least 2 letters.')
+                text: $t('Name must have at least 3 letters.')
               }
             ]"
           />
@@ -349,7 +348,7 @@ export default {
         payment: {
           firstName: {
             required,
-            minLength: minLength(2)
+            minLength: minLength(3)
           },
           lastName: {
             required
@@ -403,7 +402,7 @@ export default {
           },
           zipCode: {
             required,
-            minLength: minLength(3)
+            minLength: minLength(4)
           },
           city: {
             required

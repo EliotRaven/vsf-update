@@ -13,7 +13,7 @@ export const RemoveFromWishlist = {
   },
   methods: {
     removeFromWishlist (product: Product) {
-      WishlistModule.register()
+      WishlistModule.register(null, null)
       this.$store.dispatch('wishlist/removeItem', product)
     }
   }

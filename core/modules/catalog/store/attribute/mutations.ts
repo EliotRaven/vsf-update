@@ -3,7 +3,6 @@ import { MutationTree } from 'vuex'
 import { entityKeyName } from '@vue-storefront/store/lib/entities'
 import * as types from './mutation-types'
 import AttributeState from '../../types/AttributeState'
-import { Logger } from '@vue-storefront/core/lib/logger'
 
 const mutations: MutationTree<AttributeState> = {
   /**
@@ -23,18 +22,17 @@ const mutations: MutationTree<AttributeState> = {
       const attrCollection = Vue.prototype.$db.attributesCollection
       try {
         attrCollection.setItem(entityKeyName('attribute_code', attr.attribute_code.toLowerCase()), attr).catch((reason) => {
-          Logger.error(reason, 'mutations') // it doesn't work on SSR
+          console.error(reason) // it doesn't work on SSR
         }) // populate cache by slug
         attrCollection.setItem(entityKeyName('attribute_id', attr.attribute_id.toString()), attr).catch((reason) => {
-          Logger.error(reason, 'mutations') // it doesn't work on SSR
+          console.error(reason) // it doesn't work on SSR
         }) // populate cache by id
       } catch (e) {
-        Logger.error(e, 'mutations')()
+        console.error(e)
       }
     }
-    Vue.set(state, 'list_by_code', attrHashByCode)
-    Vue.set(state, 'list_by_id', attrHashById)
-    Vue.prototype.$bus.$emit('product-after-attributes-loaded')
+    state.list_by_code = attrHashByCode
+    state.list_by_id = attrHashById
   }
 }
 

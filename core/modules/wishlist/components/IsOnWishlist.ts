@@ -11,7 +11,7 @@ export const IsOnWishlist = {
     }
   },
   created () {
-    WishlistModule.register()
+    WishlistModule.register(null, null)
   },
   computed: {
     isOnWishlist (): boolean {

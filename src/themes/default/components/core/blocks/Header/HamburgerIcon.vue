@@ -6,7 +6,10 @@
     :aria-label="$t('Open menu')"
     data-testid="menuButton"
   >
-    <i class="material-icons">dehaze</i>
+    <img
+      src="/assets/svg/burger-menu.svg"
+      alt="Menu"
+    >
   </button>
 </template>
 
@@ -17,3 +20,12 @@ export default {
   mixins: [HamburgerIcon]
 }
 </script>
+
+<style scoped>
+.bg-cl-transparent.brdr-none {
+  background-color: transparent;
+}
+img {
+  height: 24px;
+}
+</style>

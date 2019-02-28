@@ -1,32 +1,32 @@
 {
   "mainBanners": [
 	  {
-	    "title": "Office casual",
-	    "subtitle": "Collection",
-	    "image": "/assets/ban1.jpg",
-	    "link": "/c/women-20"
+	    "title": "Наші Аптеки",
+	    "subtitle": "завжди поруч",
+	    "image": "/assets/slide_02.jpg",
+	    "link": "/-5654"
 	  }
   ],
   "smallBanners": [
     {
-      "title": "Shine on",
-      "subtitle": "Accesories",
-      "image": "/assets/ban2.jpg",
-      "link": "/c/men-11"
+      "title": "Замовлення ліків по рецепту",
+      "subtitle": "Klikis рекомедує",
+      "image": "/assets/slide_04.jpg",
+      "link": "/-5654"
     },
     {
-      "title": "Spring is coming",
-      "subtitle": "Hats",
-      "image": "/assets/ban3.jpg",
-      "link": "/c/gear-3"
+      "title": "Якісні товари для Ваших дітеи",
+      "subtitle": "Пропозиція тижня",
+      "image": "/assets/slide_05.jpg",
+      "link": "/-5654"
     }
   ],
   "productBanners": [
 	  {
-	    "title": "Spring is coming",
-	    "subtitle": "Hats",
-	    "image": "/assets/ban3.jpg",
-	    "link": "/c/gear-3"
+	    "title": "Безкоштовнии",
+	    "subtitle": "Самовивіз із аптеки",
+	    "image": "/assets/slide_02.jpg",
+	    "link": "/-5654"
 	  }
   ]
 }
