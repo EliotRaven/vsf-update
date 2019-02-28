@@ -1,159 +1,159 @@
 <template>
-    <div class="sidebar pt20">
-        <div class="accordion">
-            <div :class="['card mb10', {opened: show.includes(filterIndex)}]"
-                 v-for="(filter, filterIndex) in filters"
-                 :key="filterIndex"
-                 v-if="filter.length">
-                <div class="card-header py10">
-                    <input type="checkbox" class="hidden-radio" :value="filterIndex" v-model="show">
-                    {{ $t(filterIndex + '_filter') }}
-                    <i v-if="!show.includes(filterIndex)">+</i>
-                    <i v-else>-</i>
-                </div>
-                <div class="card-body" v-show="show.includes(filterIndex)">
-                    <div v-if="filterIndex==='price'">
-                        <price-selector context="category"
-                                        :attribute_code="item"
-                                        class="price-select block"
-                                        code="price"
-                                        v-for="(item, index) in filter"
-                                        :key="index"
-                                        :id="item.id"
-                                        :from="item.from"
-                                        :to="item.to"
-                                        :content="item.label"
-                                        :label="item.label"
-                        />
-                    </div>
-                    <div v-else>
-                        <div class="form-control pt10"
-                             v-for="(item, index) in filter"
-                             :key="index"
-                             :id="item.id">
-                            <div class="custom-checkbox dib relative">
-                                <input type="checkbox" class="m0 no-outline" :id="item.label" :value="item.label" v-model="checked_filters" >
-                                <label class="pl35 lh30 h4 pointer" :for="item.label" />
-                            </div>
-                            <div class="label dib">{{ item.label }}</div>
-                        </div>
-                    </div>
-                </div>
+  <div class="sidebar pt20">
+    <div class="accordion">
+      <div :class="['card mb10', {opened: show.includes(filterIndex)}]"
+           v-for="(filter, filterIndex) in filters"
+           :key="filterIndex"
+           v-if="filter.length">
+        <div class="card-header py10">
+          <input type="checkbox" class="hidden-radio" :value="filterIndex" v-model="show">
+          {{ $t(filterIndex + '_filter') }}
+          <i v-if="!show.includes(filterIndex)">+</i>
+          <i v-else>-</i>
+        </div>
+        <div class="card-body" v-show="show.includes(filterIndex)">
+          <div v-if="filterIndex==='price'">
+            <price-selector context="category"
+                            :attribute_code="item"
+                            class="price-select block"
+                            code="price"
+                            v-for="(item, index) in filter"
+                            :key="index"
+                            :id="item.id"
+                            :from="item.from"
+                            :to="item.to"
+                            :content="item.label"
+                            :label="item.label"
+            />
+          </div>
+          <div v-else>
+            <div class="form-control pt10"
+                 v-for="(item, index) in filter"
+                 :key="index"
+                 :id="item.id">
+              <div class="custom-checkbox dib relative">
+                <input type="checkbox" class="m0 no-outline" :id="item.label" :value="item.label" v-model="checked_filters" >
+                <label class="pl35 lh30 h4 pointer" :for="item.label" />
+              </div>
+              <div class="label dib">{{ item.label }}</div>
             </div>
+          </div>
         </div>
-        <!--<button-->
-        <!--class="visible-xs no-outline brdr-none py15 px40 bg-cl-mine-shaft :bg-cl-th-secondary ripple h5 cl-white sans-serif"-->
-        <!--@click="resetAllFilters"-->
-        <!--:class="{'button-disabled': Object.keys(activeFilters).length === 0}"-->
-        <!--:disabled="Object.keys(activeFilters).length === 0"-->
-        <!--&gt;-->
-        <!--{{ $t('Clear') }}-->
-        <!--</button>-->
-        <!--<div-->
-        <!--v-for="(filter, filterIndex) in filters"-->
-        <!--:key="filterIndex"-->
-        <!--v-if="filter.length"-->
-        <!--&gt;-->
-        <!--<h5>{{ $t(filterIndex + '_filter') }}</h5>-->
-
-        <!--<div v-if="filterIndex==='color'">-->
-        <!--<color-selector-->
-        <!--context="category"-->
-        <!--:attribute_code="color"-->
-        <!--code="color"-->
-        <!--v-for="(color, index) in filter"-->
-        <!--:key="index"-->
-        <!--:id="color.id"-->
-        <!--:label="color.label"-->
-        <!--/>-->
-        <!--</div>-->
-        <!--<div v-else-if="filterIndex==='size'">-->
-        <!--<size-selector-->
-        <!--context="category"-->
-        <!--:attribute_code="size"-->
-        <!--code="size"-->
-        <!--class="size-select mr10 mb10"-->
-        <!--v-for="(size, index) in sortById(filter)"-->
-        <!--:key="index"-->
-        <!--:id="size.id"-->
-        <!--:label="size.label"-->
-        <!--/>-->
-        <!--</div>-->
-        <!--<div v-else-if="filterIndex==='price'">-->
-        <!--<price-selector-->
-        <!--context="category"-->
-        <!--:attribute_code="price"-->
-        <!--class="price-select mb10 block"-->
-        <!--code="price"-->
-        <!--v-for="(price, index) in filter"-->
-        <!--:key="index"-->
-        <!--:id="price.id"-->
-        <!--:from="price.from"-->
-        <!--:to="price.to"-->
-        <!--:content="price.label"-->
-        <!--:label="price.label"-->
-        <!--/>-->
-        <!--</div>-->
-        <!--<div v-else-if="filterIndex==='erin_recommends'">-->
-        <!--<generic-selector-->
-        <!--context="category"-->
-        <!--:attribute_code="filter.attribute_code"-->
-        <!--class="price-select mb10 block"-->
-        <!--:code="filterIndex"-->
-        <!--v-for="(option, index) in filter"-->
-        <!--:key="index"-->
-        <!--:id="option.id"-->
-        <!--:label="option.label"-->
-        <!--/>-->
-        <!--</div>-->
-        <!--<div v-else>-->
-        <!--<new-selector v-for="(option, index) in filter"-->
-        <!--context="category"-->
-        <!--attribute_code="new"-->
-        <!--code="new"-->
-        <!--:key="index"-->
-        <!--:id="option.id"-->
-        <!--:label="option.label"-->
-        <!--/>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!-- add the custom controls to other available filters set in config.products.defaultFilters; must be numeric field in ES
-        <div v-if="filters.erin_recommends && filters.erin_recommends.length">
-        <h5>
-        {{ $t('Erin recommends') }}
-        </h5>
-        <div
-        class="size-select mr10 mb10"
-        v-for="(er, index) in filters.erin_recommends"
-        :key="index"
-        :id="er.id"
-        :label="er.label"
-        >{{ er.label }}</div>
-        </div>
-        -->
+      </div>
     </div>
+    <!--<button-->
+    <!--class="visible-xs no-outline brdr-none py15 px40 bg-cl-mine-shaft :bg-cl-th-secondary ripple h5 cl-white sans-serif"-->
+    <!--@click="resetAllFilters"-->
+    <!--:class="{'button-disabled': Object.keys(activeFilters).length === 0}"-->
+    <!--:disabled="Object.keys(activeFilters).length === 0"-->
+    <!--&gt;-->
+    <!--{{ $t('Clear') }}-->
+    <!--</button>-->
+    <!--<div-->
+    <!--v-for="(filter, filterIndex) in filters"-->
+    <!--:key="filterIndex"-->
+    <!--v-if="filter.length"-->
+    <!--&gt;-->
+    <!--<h5>{{ $t(filterIndex + '_filter') }}</h5>-->
+
+    <!--<div v-if="filterIndex==='color'">-->
+    <!--<color-selector-->
+    <!--context="category"-->
+    <!--:attribute_code="color"-->
+    <!--code="color"-->
+    <!--v-for="(color, index) in filter"-->
+    <!--:key="index"-->
+    <!--:id="color.id"-->
+    <!--:label="color.label"-->
+    <!--/>-->
+    <!--</div>-->
+    <!--<div v-else-if="filterIndex==='size'">-->
+    <!--<size-selector-->
+    <!--context="category"-->
+    <!--:attribute_code="size"-->
+    <!--code="size"-->
+    <!--class="size-select mr10 mb10"-->
+    <!--v-for="(size, index) in sortById(filter)"-->
+    <!--:key="index"-->
+    <!--:id="size.id"-->
+    <!--:label="size.label"-->
+    <!--/>-->
+    <!--</div>-->
+    <!--<div v-else-if="filterIndex==='price'">-->
+    <!--<price-selector-->
+    <!--context="category"-->
+    <!--:attribute_code="price"-->
+    <!--class="price-select mb10 block"-->
+    <!--code="price"-->
+    <!--v-for="(price, index) in filter"-->
+    <!--:key="index"-->
+    <!--:id="price.id"-->
+    <!--:from="price.from"-->
+    <!--:to="price.to"-->
+    <!--:content="price.label"-->
+    <!--:label="price.label"-->
+    <!--/>-->
+    <!--</div>-->
+    <!--<div v-else-if="filterIndex==='erin_recommends'">-->
+    <!--<generic-selector-->
+    <!--context="category"-->
+    <!--:attribute_code="filter.attribute_code"-->
+    <!--class="price-select mb10 block"-->
+    <!--:code="filterIndex"-->
+    <!--v-for="(option, index) in filter"-->
+    <!--:key="index"-->
+    <!--:id="option.id"-->
+    <!--:label="option.label"-->
+    <!--/>-->
+    <!--</div>-->
+    <!--<div v-else>-->
+    <!--<new-selector v-for="(option, index) in filter"-->
+    <!--context="category"-->
+    <!--attribute_code="new"-->
+    <!--code="new"-->
+    <!--:key="index"-->
+    <!--:id="option.id"-->
+    <!--:label="option.label"-->
+    <!--/>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!-- add the custom controls to other available filters set in config.products.defaultFilters; must be numeric field in ES
+    <div v-if="filters.erin_recommends && filters.erin_recommends.length">
+    <h5>
+    {{ $t('Erin recommends') }}
+    </h5>
+    <div
+    class="size-select mr10 mb10"
+    v-for="(er, index) in filters.erin_recommends"
+    :key="index"
+    :id="er.id"
+    :label="er.label"
+    >{{ er.label }}</div>
+    </div>
+    -->
+  </div>
 </template>
 
 <script>
-  import Sidebar from '@vue-storefront/core/compatibility/components/blocks/Category/Sidebar'
+import Sidebar from '@vue-storefront/core/compatibility/components/blocks/Category/Sidebar'
 
-  import ColorSelector from 'theme/components/core/ColorSelector'
-  import SizeSelector from 'theme/components/core/SizeSelector'
-  import PriceSelector from 'theme/components/core/PriceSelector'
-  import GenericSelector from 'theme/components/core/GenericSelector'
+import ColorSelector from 'theme/components/core/ColorSelector'
+import SizeSelector from 'theme/components/core/SizeSelector'
+import PriceSelector from 'theme/components/core/PriceSelector'
+import GenericSelector from 'theme/components/core/GenericSelector'
 
-  import BaseCheckbox from '@vue-storefront/theme-default/components/core/blocks/Form/BaseCheckbox'
+import BaseCheckbox from '@vue-storefront/theme-default/components/core/blocks/Form/BaseCheckbox'
 
-  export default {
-    components: {
-      ColorSelector,
-      SizeSelector,
-      PriceSelector,
-      GenericSelector,
-      BaseCheckbox
-    },
-    mixins: [Sidebar]
-  }
+export default {
+  components: {
+    ColorSelector,
+    SizeSelector,
+    PriceSelector,
+    GenericSelector,
+    BaseCheckbox
+  },
+  mixins: [Sidebar]
+}
 </script>
 
 <style lang="scss">
