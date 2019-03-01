@@ -22,6 +22,10 @@ export default {
     checked: {
       type: String,
       default: null
+    },
+    city: {
+      type: String,
+      default: null
     }
   },
   data () {
@@ -90,10 +94,10 @@ export default {
     },
     showPopup (val) {
       this.$emit('show:popup', val)
+    },
+    city () {
+      this.getData()
     }
-  },
-  updated () {
-    this.getData()
   },
   beforeMount () {
     this.getData()
