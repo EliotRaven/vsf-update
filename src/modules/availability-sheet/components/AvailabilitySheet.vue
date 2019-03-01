@@ -92,6 +92,9 @@ export default {
       this.$emit('show:popup', val)
     }
   },
+  updated () {
+    this.getData()
+  },
   beforeMount () {
     this.getData()
   }

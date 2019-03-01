@@ -135,13 +135,13 @@ export default {
   },
   computed: {
     order () {
-      return this.$store.state.order.last_order_confirmation.order
+      return this.$store.state.order.last_order_confirmation ? this.$store.state.order.last_order_confirmation.order : {}
     },
     total () {
-      return parseInt(this.order.products.reduce((p, c) => p + c.final_price, '')).toFixed(2)
+      return this.order ? parseInt(this.order.products.reduce((p, c) => p + c.final_price, '')).toFixed(2) : {}
     },
     orderData () {
-      return this.$store.state.order.last_order_confirmation.order.addressInformation.shippingAddress
+      return this.$store.state.order.last_order_confirmation ? this.$store.state.order.last_order_confirmation.order.addressInformation.shippingAddress : {}
     },
     lastOrderConfirmation () {
       return this.$store.state.order.last_order_confirmation ? this.$store.state.order.last_order_confirmation.confirmation : {}
