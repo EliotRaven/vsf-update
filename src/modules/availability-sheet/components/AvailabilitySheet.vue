@@ -76,16 +76,6 @@ export default {
     },
     filterData (item) {
       return this.findMissing().find(i => i.sku === item.sku)
-    },
-    getData () {
-      let data = {
-        inventoryRequest: {
-          stockId: this.stockId,
-          items: this.productsInCartMap
-        },
-        algorithmCode: 'priority'
-      }
-      this.$store.dispatch('availability-sheet/get', data)
     }
   },
   watch: {
@@ -94,13 +84,7 @@ export default {
     },
     showPopup (val) {
       this.$emit('show:popup', val)
-    },
-    city () {
-      this.getData()
     }
-  },
-  beforeMount () {
-    this.getData()
   }
 }
 </script>

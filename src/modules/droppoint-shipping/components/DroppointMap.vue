@@ -145,9 +145,34 @@ export default {
           label: item
         }
       })
+    },
+    productsInCart () {
+      return JSON.parse(JSON.stringify(this.$store.state.cart.cartItems))
+    },
+    productsInCartMap () {
+      return this.productsInCart.map(i => {
+        return {
+          sku: i.sku,
+          qty: i.qty
+        }
+      })
     }
   },
   methods: {
+    getData () {
+      let data = {
+        inventoryRequest: {
+          stockId: this.droppoints.map(c => {
+            if (c.city === this.city) {
+              return c.city_id
+            }
+          }),
+          items: this.productsInCartMap
+        },
+        algorithmCode: 'priority'
+      }
+      this.$store.dispatch('availability-sheet/get', data)
+    },
     showList () {
       this.show = false
       this.changeCity()
@@ -289,7 +314,13 @@ export default {
         this.selected = {}
         this.setShipping(true)
       }
+    },
+    city () {
+      this.getData()
     }
+  },
+  beforeMount () {
+    this.getData()
   },
   destroyed () {
     this.$bus.$off('droppoint-map-update')
