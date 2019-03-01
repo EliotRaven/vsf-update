@@ -69,12 +69,12 @@
           </div>
           <div class="col-md-6 thank-you-improvment">
             <gmap-map class="map-container"
-                      :center="center"
+                      :center="center.position"
                       :zoom="12"
                       :options="{streetViewControl:false, fullscreenControl: false}">
               <gmap-marker class="marker"
                            :icon="{url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAzCAYAAAAKLSELAAAACXBIWXMAAAsSAAALEgHS3X78AAACf0lEQVRoBdWZ35HaMBCHf6GB3LtHAx0cHUSpIHQQUsG5g5AOoAPcwXUQ0QF0gMejd1IBmWXWYLySDv/B1n0z94BlzHe71spafzmfz2iLVXoBYA5AA5gBmNYutQNwArAH8J4UZt/mpxpLWqVJKgVAgl/FCWFyAFv6SwpzDJ7ZRpLl1gC+icF2bACsksKcepG0Sq8A/BYD3fkHYJkU5j10paCkVfoFgAHwKgb7ZZMUJvVdcSKO3ATnAwkSb1bprTjKOCPJEdw7ZuuzyZLCLOu/ISJZSfHQgsRPq/S6flBI0owbKMU+3rj+XrlLt1WaivJfz5eHhOrpvCxP9Uh6b96BmfKCgTtJq/RypPvQR8rz4y6S3jo1ErTkLq+SVunZyJPFR4pKJBeek8ZmSgGMXZJYlJJzMRQP8wnPoKbPhUNySXfMUSReXMtibLx+BkmxLMbIYcLPjTFzmjyyERqZY5nuXcSS+1LSiKF4MKVkcEs5Ijl1PS6S3P7II5S8BK9agsQGKALWdcktdxRiISv7RVdJLkUxRfPqUl9x1pFEM6u2Ce8kI4rmqvrB12Y5jrhzFM0r3wOG6McMRF6PolcyKQytQJkYeD6p61nCKcmkAxf4zNdM9UryfzRU2vNQc8IriVva/4iBfqGSt3ClucQ5u+tYpSkNP8RAP/xKChNslAUjWYHSfhBHu7P5SBANX5HMeKvR1x7d2Xp28fBGjBd73dOyeQhNlDqNdou8nnYVJUEdmiidJHETbdvgaiyItvtuLk3fG0a0lSDavACtUnkh9dFkai2Irh2MB+/RXRdBdI1kCUd062hpP1xmQvQiSXCfk0QvbwzoNkgKIx67RpV8GgD+A2F+7bN9cUrnAAAAAElFTkSuQmCC'}"
-                           :position="center"
+                           :position="center.position"
                            :clickable="false"/>
             </gmap-map>
             <!--<h3>-->
@@ -111,6 +111,7 @@ import BaseTextarea from 'theme/components/core/blocks/Form/BaseTextarea'
 import ButtonOutline from 'theme/components/theme/ButtonOutline'
 import VueOfflineMixin from 'vue-offline/mixin'
 import { EmailForm } from '@vue-storefront/core/modules/mailer/components/EmailForm'
+import { dps } from '../../../../../../../src/modules/droppoint-shipping/components/droppoints'
 
 // GoogleMaps cannot be included while in SSR
 if (process.browser) {
@@ -129,11 +130,13 @@ export default {
   data () {
     return {
       feedback: '',
-      center: {lat: 55.488351, lng: 9.479296},
       icon: ''
     }
   },
   computed: {
+    center () {
+      return dps.find(l => l.id === this.orderData.company)
+    },
     order () {
       return this.$store.state.order.last_order_confirmation ? this.$store.state.order.last_order_confirmation.order : {}
     },
@@ -141,6 +144,7 @@ export default {
       return this.order ? parseInt(this.order.products.reduce((p, c) => p + c.final_price, '')).toFixed(2) : {}
     },
     orderData () {
+      debugger
       return this.$store.state.order.last_order_confirmation ? this.$store.state.order.last_order_confirmation.order.addressInformation.shippingAddress : {}
     },
     lastOrderConfirmation () {
